@@ -1,4 +1,4 @@
-var  next_card = (answered_index,params,isPartOfCouncil)=>{
+const  next_card = (answered_index,params,isPartOfCouncil)=>{
     let current_index = answered_index+1;
     let current_card = {};
     while(current_index<cards.length)
@@ -35,6 +35,12 @@ var  next_card = (answered_index,params,isPartOfCouncil)=>{
             return current_card;
         }
         current_index++;
+    }
+}
+
+const settleEffect = (effects,params)=>{
+    for(var key in effects){
+        params[key] += effects; 
     }
 }
 
