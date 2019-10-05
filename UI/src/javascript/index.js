@@ -18,7 +18,6 @@ const nodeRight =`<div class="graph__nodeWrapper graph__nodeWrapper--right">
 const pathTop =`<div class="graph__pathWrapper graph__pathWrapper--top">
                     <div class="graph__path graph__path--top"></div>
                 </div> `
-const card =`<div class="card__body">Template</div>`
 
 // Helper functions
 const handleStyleProperties = (components, property, value) => components.forEach((element) => element.style[property] = value)
@@ -35,6 +34,7 @@ const cardContainers = document.getElementsByClassName("card__container")[0];
 const cards = document.getElementsByClassName("card__body");
 const graphRow = document.getElementsByClassName("graph__row");
 const graphCol = document.getElementsByClassName("graph__col");
+const graphPageWrapper = document.getElementsByClassName("graphPage__wrapper")[0];
 
 // Graph Build
 var currPath = ``
@@ -81,29 +81,30 @@ cardContainers.innerHTML = currCard
 // }
 
 cardContainers.addEventListener("click", () => {
-    cardContainers.classList.toggle("card__container--active")
+    graphPageWrapper.classList.toggle("graphPage__wrapper--active")
     for(let i=0; i<cards.length; i++){
         if(cards[i].classList.contains("card__body--active")){
             cards[i].classList.toggle("card__body--active")
         }
     }
+    setTimeout(() => cardContainers.classList.toggle("card__container--active"), 301);
 })
 
-buttonNavigateLeft.addEventListener("click", () => {
-    cn = Math.max(cn - 1, 0)
+// buttonNavigateLeft.addEventListener("click", () => {
+//     cn = Math.max(cn - 1, 0)
     
-    if(graphPaths[cn].classList.contains("graph__path--active")){
+//     if(graphPaths[cn].classList.contains("graph__path--active")){
         
-        handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "none")
-        graphPaths[cn].classList.toggle("graph__path--active")
+//         handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "none")
+//         graphPaths[cn].classList.toggle("graph__path--active")
         
-        setTimeout(() => {
-            handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
-            graphNodes[cn].classList.toggle("graph__node--active")
-            graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--active")
-        }, 501)
-    }    
-})
+//         setTimeout(() => {
+//             handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
+//             graphNodes[cn].classList.toggle("graph__node--active")
+//             graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--active")
+//         }, 501)
+//     }    
+// })
 
 buttonNavigateRight.addEventListener("click", () => {
     cn = Math.min(cn + 1, graphPathsWrapper.length)
@@ -111,15 +112,21 @@ buttonNavigateRight.addEventListener("click", () => {
     if(!graphPaths[cn-1].classList.contains("graph__path--active")){
         
         handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "none")
+        graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
         graphNodes[cn - 1].classList.toggle("graph__node--active")
         graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
+        graphPageWrapper.classList.toggle("graphPage__wrapper--active")
         
         setTimeout(() => {
             handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
+
             graphPaths[cn-1].classList.toggle("graph__path--active")
+            cardContainers.classList.toggle("card__container--active")
+            if(graphNodes.length > cn){
+                graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
+            }
 
             setTimeout(() => {
-                cardContainers.classList.toggle("card__container--active")
                 cards[cn].classList.toggle("card__body--active")
             }, 501)
             
@@ -127,3 +134,5 @@ buttonNavigateRight.addEventListener("click", () => {
     }
 })
 
+graphNodesWrapper[0].classList.toggle("graph__nodeWrapper--next");
+console.log("LAST")

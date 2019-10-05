@@ -261,7 +261,6 @@ const cards = [
 				text: 'Enroll for that course and dedicate yourself',
 				effect: {
 					technical: doubleSkillIncrement,
-					time: 
 				}
 			},
 			{
