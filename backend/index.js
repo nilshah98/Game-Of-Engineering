@@ -55,6 +55,28 @@ function juniorTechSelector(parameters){
 	return res
 };
 
+function juniorSocialSelector(parameters){
+	let res = [];
+	let decider = Math.random();
+	let {social} = parameters;
+	let socialResponse = {}
+	if(decider >= 0.5 && social >= 20){
+		socialResponse.effect = {social : 20,time:-10};//Todo @Parshva
+		socialResponse.message = 'You got selected';
+		socialResponse.text = 'Apply for the post';
+	} else {
+		socialResponse.effect = {};
+		socialResponse.message = 'Better luck next time!!';
+		socialResponse.text = 'Apply for the post';
+	}
+	res.push(socialResponse);
+	res.push({
+		text : 'Not intrested to apply',
+		effect : {},
+	});
+	return res
+};
+
 function juniorTeamSelector(parameters){
 	let res = [];
 	let decider = Math.random();
@@ -362,7 +384,7 @@ const cards = [
 		question: 'Interviews for Juniors Positions at <cultural council> have begun, you might have a good shot at it',
 		title: 'Time to be an insider',
 		type: 0,
-		options: socialCouncil
+		options: juniorSocialSelector
 	},
 	{
 		id : 13,
@@ -485,7 +507,7 @@ const cards = [
 			{
 				text : 'Forsake work for studies',
 				effect : {
-					pointer : doublePointerIncrement,
+					pointer : doubleSkillIncrement,
 					time : singleTimeDecrement,
 					management : singleSkillDecrement
 				}
@@ -676,7 +698,7 @@ const cards = [
 				text : 'Complete work and go to sleep',
 				effect : {
 					time : singleTimeDecrement,
-					pointer : doubleSKillDecrement,
+					pointer : doubleSkillDecrement,
 					sports : singleSkillIncrement
 				}
 			},
@@ -707,4 +729,4 @@ const cards = [
 // title
 // type (0 => static, 1 => dynamic [responsive] )
 // options: [{text, effect, message}, ...]
-export default cards;
+module.exports = cards;
