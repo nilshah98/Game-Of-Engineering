@@ -191,6 +191,46 @@ function resultSelector(parameters) {
 	return res;
 };
 
+function finalYearProjectSelector(parameters) {
+	let res = [];
+	let decider = Math.random();
+	let response = {};
+	if(decider>=0.5) {
+		response.text = 'Propose and pursue project in unchartered territory and sincerely complete it',
+		response.message = 'Successfully Implemented',
+		response.effect = {
+			pointer: doubleSkillIncrement,
+			time: doubleTimeDecrement,
+			technical: doubleSkillIncrement
+		}
+	}
+	else {
+		response.text = 'Propose and pursue project in unchartered territory and sincerely complete it',
+		response.message = 'Unsuccessfully Implemented',
+		response.effect = {
+			pointer: doubleSkillDecrement,
+			time: doubleTimeDecrement,
+			technical: doubleSkillIncrement
+		}
+	}
+	res.push(response);
+	res.push({
+		text: 'Propose a project which you are well familiar with and get it home easily',
+		effect: {
+			technical: singleSkillIncrement,
+			time: singleTimeDecrement,
+			pointer: singleSkillIncrement
+		}
+	});
+	res.push({
+		text: 'Pick a team with having a super excited and knowledge person who will do everything on your  behalf',
+		effect: {
+			technical: doubleSkillDecrement,
+			pointer: doubleSkillIncrement
+		}
+	});
+}
+
 const cards = [
     {
 		id: 1,
@@ -777,15 +817,404 @@ const cards = [
 				}
 			},
 		]
+	},
+	{
+		id : 26,
+		requirement : {technical:60},
+		question : 'You have enough skills and want to try for some industrial experience so you are trying to land an internship.',
+		title : 'Internships',
+		type : 0,
+		options : [
+			{
+				text : 'Apply for internship',
+				effect : {
+					time : doubleTimeDecrement,
+					technical : doubleSkillIncrement 
+				}
+			},
+			{
+				text : 'Raincheck on internship this time',
+				effect : {
+					time : doubleTimeDecrement,
+					social : doubleSkillIncrement 
+				}
+			},
+		]
+	},
+	{
+		id: 27,
+		requirement: {},
+		question: `Hey Guys, Its Siraj! Your favourite tech Youtuber is starting a new certified course machine learning. It's a 5 week course requiring daily commitment for an hour`,
+		title: 'MOOCs',
+		type: 0,
+		options: [
+			{
+				text: 'Enroll for that course and dedicate yourself',
+				effect: {
+					technical: doubleSkillIncrement,
+					time: doubleTimeDecrement
+				}
+			},
+			{
+				text: 'Enroll for course and work half-assed',
+				effect: {
+					technical: singleSkillIncrement,
+					time: singleTimeDecrement
+				}
+			},
+			{
+				text: 'Enroll for another pocket friendly lighter course',
+				effect: {
+					technical: singleSkillIncrement,
+					time: singleTimeDecrement
+				}
+			},
+			{
+				text: 'Reject the course',
+				effect: {}
+			}
+		]
+	},
+	{
+		id: 28,
+		requirement: {},
+		question: 'Best out of Waste! This is a <beach cleanup drive on Verspva beach>',
+		title: 'Teach In India Initiative',
+		type: 0,
+		options: [
+			{
+				text: 'Accept and lead your team',
+				effect: {
+					time: doubleTimeDecrement, 
+					social: doubleSkillIncrement, 
+				}
+			},
+			{
+				text: 'Zindagi humari jhand ba fir bhi ghamand ba',
+				effect: {}
+			}
+		]
+	},
+	{
+		id : 29,
+		isVacation : false
+	},
+	{
+		id: 30,
+		whichCouncil : 'social',
+		requirement: {},
+		question: 'Apply for Head Positions at Cultural council you have been a part of, you might have a good shot at it ',
+		title: 'With great power comes great responsibility',
+		type: 0,
+		options: [
+			{
+				text: 'Apply for the post',
+				effect: {
+					time: doubleTimeDecrement, 
+					social: doubleSkillIncrement, 
+				}
+			},
+			{
+				text: 'Not Intrested',
+				effect: {}
+			}
+		]
+	},
+	{
+		id: 31,
+		whichCouncil: 'technical',
+		requirement: {technical: 50},
+		question: 'Apply for Head Positions at Cultural council you have been a part of, you might have a good shot at it ',
+		title: 'With great power comes great responsibility',
+		type: 0,
+		options: [
+			{
+				text: 'Apply for the post',
+				effect: {
+					time: doubleTimeDecrement, 
+					social: doubleSkillIncrement, 
+				}
+			},
+			{
+				text: 'Not Intrested',
+				effect: {}
+			}
+		]
+	},
+	{
+		id : 32,
+		reqiurement : {},
+		title : 'Choices Chances and Changes',
+		question : 'Many of Your friends have already decided what you want to pursue in your life [Job, CAT, GRE]',
+		type : 0,
+		options : [
+			{
+				text : 'Job',
+				effect : {
+					goal : 'job'
+				}
+			},
+			{
+				text : 'GRE/GATE',
+				effect : {
+					goal : 'gre'
+				}
+			},
+			{
+				text : 'CAT/GMAT',
+				effect : {
+					goal : 'cat'
+				}
+			},
+			{
+				text : 'Decide Later',
+				effect : {}
+			}
+		]
+	},
+	{
+		id: 33,
+		requirement: {technical: 40},
+		question: 'Smart India Hackthon has been announced, it is one of the biggest Hackathon that one could be a part of it',
+		title: 'Mere yuva bhaiya or beheno',
+		type: 0,
+		options: [
+			{
+				text: 'Apply for the hackathon',
+				effect: {
+					time: singleTimeDecrement, 
+					technical: singleSkillIncrement, 
+				}
+			},
+			{
+				text: 'Not Intrested',
+				effect: {}
+			}
+		]
+	},
+	{
+		id: 34,
+		requirement: {},
+		question: 'Your College Provides an inter-disciplinary subject to choose from on which you\'ll be getting credits for',
+		title: 'Time to expand your domain',
+		type: 0,
+		options: [
+			{
+				text: 'Choose a subject you are unaware of but is a lot of use',
+				effect: {
+					technical: singleSkillIncrement,
+					time: doubleTimeDecrement,
+					pointer: singleSkillIncrement
+				}
+			},
+			{
+				text: 'Choose a subject which won\'t be much of burden and completed easily but learning is less',
+				effect: {
+					time: singleTimeDecrement,
+					pointer: doubleSkillIncrement,
+					technical: singleSkillDecrement
+				}
+			}
+		]
+	},
+	{
+		id : 35,
+		title : 'Time to get serious with life',
+		question : 'Based on the choice made earlier or yet to make, start working forwards it specifically putting some hours for preparation',
+		type : 0,
+		options : [
+			{
+				text : 'Apply',
+				effect : {
+					time : doubleTimeDecrement,
+					technical : doubleSkillIncrement,
+				}
+			},
+			{
+				text : 'Reject',
+				effect : {
+					time : singleTimeIncrement,
+					technical : doubleSkillDecrement
+				}
+			}
+		]
+	},
+	{
+		id: 36,
+		isVacation: true
+	},
+	{
+		id : 37,
+		requirement: {},
+		question: 'You have enough skills and want to try for some industrial experience so you are trying to land an internship',
+		title: 'Internships',
+		type: 0,
+		options: [
+			{
+				text: 'Apply for internship in your skills',
+				effect: {
+					technical: singleSkillIncrement,
+					time: singleTimeDecrement
+				}
+			},
+			{
+				text: 'Apply for internship in another skill',
+				effect: {
+					technical: doubleSkillIncrement,
+					time: doubleTimeDecrement,
+				}
+			},
+			{
+				text: 'Opt us',
+				effect: {}
+			}
+		]
+	},
+	{
+		id : 38,
+		title : 'GRE / GATE',
+		question : 'You have decided to work on your master\'s application profile',
+		type : 0,
+		options : [
+			{
+				text : 'Work on your pointer, entrance exams',
+				effect : {
+					pointer : doubleSkillIncrement,
+					time : doubleTimeDecrement,
+					technical : singleSkillDecrement
+				}
+			},
+			{
+				text : 'Defer work till next year',
+				effect : {
+					technical : singleSkillIncrement,
+					time : singleTimeDecrement
+				}
+			}
+		]	
+	},
+    {
+        id:39,
+        title:'Placement',
+        type : 0,
+		options : [
+			{
+				text : 'Prepare Core Subjects, Give Mock Tests ',
+				effect : {
+					time : singleTimeDecrement,
+					technical : singleSkillIncrement,
+				}
+			},
+			{
+				text : 'Just Chill',
+				effect : {
+				}
+			}
+		]
+        
+    },
+    {
+        id: 40,
+        title : 'All of the above',
+		question : 'You are willing to do all of the things together!!',
+		type : 0,
+		options : [
+			{
+				text : 'Yes!!',
+				effect :  {
+					social : -50,
+					technical : -50,
+					goal : undefined,
+					management : -50,
+					cultural : -50,
+					sports : -50,
+					time : -100,
+					pointer : 0
+				}
+			}
+		]
+	},
+	{
+        id: 41,
+        isVacation: false
+	},
+    {
+		id: 42,
+		requirement: {},
+		question: 'You have N number of things to do, but BE project is as much important',
+		title: 'Final Year Project',
+		type: 1,
+		options: finalYearProjectSelector
+	},
+	{
+		id: 43,
+        requirement: {},
+        type : 0,
+        title : 'Its Hammer time',
+		question : 'Welcom to Day, today Is the Day we decide your fate',
+		options : [
+			{
+				text : 'Lets get it done with',
+				message: 'Congrats!! You got a score of 325!!!',
+                effect : {
+					time : singleTimeDecrement,
+					technical : singleSkillIncrement,
+				}
+			},
+		]
+
+	},
+	{
+		id : 44,
+		requirement : {},
+		type : 0,
+		title : 'Relax or Redemption/ Akhri Koshish',
+		question : 'Now that you are done with attempting a shot at your goal. Relax and work on improving your pointer try some and prepare for something else focus on improving your pointer',
+		options : [
+			{
+				text : 'Foreign country abhi door hai sahab',
+				effect : {
+					technical : singleSkillIncrement
+				}
+			},
+			{
+				text : 'Management karna mushkil hi nahi na mumkin hai',
+				effort : {
+					management : singleSkillIncrement
+				}
+			},
+			{
+				text : 'De de job de de, de de job de',
+				effort : {
+					technical : singleSkillIncrement,
+				}
+			}
+		]
+	},
+	{
+		id : 45,
+		isGameOver : true
 	}
 ];
 
-// Mock format
-// id
-// isVacation
-// reqiurement order: social, time, pointer, skills: {technical, cultural, management, sports}, whichCouncil
-// question
-// title
-// type (0 => static, 1 => dynamic [responsive] )
-// options: [{text, effect, message}, ...]
-//export {cards};
+window.cards = cards;
+
+function updateStore(newParams,newQid){
+	localStorage.setItem("params",newParams);
+	localStorage.setItem("qid",newQid);
+}
+
+function getStore(){
+	let res = {};
+	res.params = localStorage.getItem("params") || {
+		social : 50,
+		technical : 50,
+		goal : undefined,
+		management : 50,
+		cultural : 50,
+		sports : 50,
+		time : 100,
+		pointer : 0
+	};
+	res.qid = localStorage.getItem("qid") || 1;
+}
