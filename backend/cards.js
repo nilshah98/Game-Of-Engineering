@@ -210,41 +210,41 @@ const cards = [
 	},
   	{
     	id: 3,
-		reqiurement : {},
-		title : 'Testing times',
-		question : 'Test schedule is out for next week but does that bother you?',
-		type : 0,
-		options : [
-			{
-				text : 'Prepare a schedule and study for test',
-				effect : {
-					pointer : doubleSkillIncrement,
-					time : doubleTimeDecrement,
+			reqiurement : {},
+			title : 'Testing times',
+			question : 'Test schedule is out for next week but does that bother you?',
+			type : 0,
+			options : [
+				{
+					text : 'Prepare a schedule and study for test',
+					effect : {
+						pointer : doubleSkillIncrement,
+						time : doubleTimeDecrement,
+					}
+				},
+				{
+					text : 'Complete online course on coursera',
+					effect : {
+						time : singleTimeDecrement,
+						technical : singleSkillIncrement
+					}
+				},
+				{
+					text : 'Joaquin Phoenix as joker is just amazing',
+					effect : {
+						social : singleSkillIncrement,
+						pointer : singleSkillDecrement
+					}
+				},
+				{
+					text : 'Go for publiity rounds of your college fest',
+					effect : {
+						pointer : singleSkillDecrement,
+						social : singleSkillIncrement,
+						time : doubleTimeDecrement
+					}
 				}
-			},
-			{
-				text : 'Complete online course on coursera',
-				effect : {
-					time : singleTimeDecrement,
-					technical : singleSkillIncrement
-				}
-			},
-			{
-				text : 'Joaquin Phoenix as joker is just amazing',
-				effect : {
-					social : singleSkillIncrement,
-					pointer : singleSkillDecrement
-				}
-			},
-			{
-				text : 'Go for publiity rounds of your college fest',
-				effect : {
-					pointer : singleSkillDecrement,
-					social : singleSkillIncrement,
-					time : doubleTimeDecrement
-				}
-			}
-		]
+			]
   	},
   	{
     	id: 4,
