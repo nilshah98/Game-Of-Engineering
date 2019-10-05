@@ -759,7 +759,24 @@ const cards = [
 		isVacation : true,
 	},
 	{
-		id : 25
+		id : 25,
+		requirement : {},
+		question : 'From the snowy delights of Rohtang Pass to the soothing warmth of the surrounding thermal springs, there are several places to visit in Kullu Manali for nature lovers and thrill seekers. With its picturesque views of snow-clad mountains, river valleys, charming cafes and laidback vibe, this hill station in Himachal Pradesh is an immensely popular vacation spot with both domestic and foreign tourists.',
+		title : 'Manali jaate hai',
+		type : 0,
+		options : [
+			{
+				text : 'You\'re in!!',
+				effect : {}
+			},
+			{
+				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
+				effect : {
+					time : doubleTimeDecrement,
+					social : doubleSkillIncrement 
+				}
+			},
+		]
 	}
 ];
 
