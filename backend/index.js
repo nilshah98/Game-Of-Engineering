@@ -13,11 +13,11 @@ function netaSelector(parameters){
 	let {social} = parameters;
 	let socialResponse = {}
 	if(decider >= 0.5 && social >= 20){
-		socialResponse.effect = {social : 20};
+		socialResponse.effect = {social : doubleSkillIncrement};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Stand for CR';
 	} else {
-		socialResponse.effect = {social : 10};
+		socialResponse.effect = {social : singleSkillIncrement};
 		socialResponse.message = 'Better luck next time!!';
 		socialResponse.text = 'Stand for CR';
 	}
@@ -39,7 +39,11 @@ function juniorTechSelector(parameters){
 	let {technical} = parameters;
 	let socialResponse = {}
 	if(decider >= 0.5 && technical >= 20){
-		socialResponse.effect = {technical : 20,time:-10};//Todo @Parshva
+		socialResponse.effect = {
+			technical : doubleSkillIncrement,
+			time: doubleTimeDecrement,
+			social: singleSkillIncrement
+		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Apply for the post';
 	} else {
@@ -61,7 +65,12 @@ function juniorSocialSelector(parameters){
 	let {social} = parameters;
 	let socialResponse = {}
 	if(decider >= 0.5 && social >= 20){
-		socialResponse.effect = {social : 20,time:-10};//Todo @Parshva
+		socialResponse.effect = {
+			social : doubleSkillIncrement,
+			time: doubleTimeDecrement,
+			cultural: doubleSkillIncrement,
+			management: doubleSkillIncrement
+		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Apply for the post';
 	} else {
@@ -82,12 +91,18 @@ function juniorTeamSelector(parameters){
 	let decider = Math.random();
 	let {sports} = parameters;
 	let socialResponse = {}
-	if(decider >= 0.5 && sports >= 20){
-		socialResponse.effect = {sports : 20,time: -10};//Todo @Parshva
+	if(decider >= 0.5 && sports >= 30){
+		socialResponse.effect = {
+			sports : doubleSkillIncrement,
+			social: singleSkillIncrement,
+			time: doubleTimeDecrement
+		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Go for the selection';
 	} else {
-		socialResponse.effect = {};
+		socialResponse.effect = {
+			sports: singleSkillIncrement
+		};
 		socialResponse.message = 'Better luck next time!!';
 		socialResponse.text = 'Go for the selection';
 	}
@@ -105,7 +120,10 @@ function icpcSelector(parameters){
 	let {technical} = parameters;
 	let socialResponse = {}
 	if(decider >= 0.5 && technical >= 20){
-		socialResponse.effect = {technical : 20,time: -10};//Todo @Parshva
+		socialResponse.effect = {
+			technical : doubleSkillIncrement,
+			time: doubleTimeDecrement
+		};
 		socialResponse.message = 'Congrats Your Team Qualified';
 		socialResponse.text = 'Apply for ICPC';
 	} else {
