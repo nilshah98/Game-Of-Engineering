@@ -4,24 +4,66 @@ var cn = 0;
 
 // Graph builder strings
 const pathLeft =`<div class="graph__pathWrapper graph__pathWrapper--left">
-                    <div class="graph__path graph__path--left"></div>
-                </div>`
+<div class="graph__path graph__path--left"></div>
+</div>`
+
 const pathRight =`<div class="graph__pathWrapper graph__pathWrapper--right">
-                    <div class="graph__path graph__path--right"></div>
-                </div>`
+<div class="graph__path graph__path--right"></div>
+</div>`
+
 const nodeLeft =`<div class="graph__nodeWrapper graph__nodeWrapper--left">
-                    <div class="graph__node graph__node--left"></div>
-                </div>`
+<div class="graph__node graph__node--left"></div>
+</div>`
+
 const nodeRight =`<div class="graph__nodeWrapper graph__nodeWrapper--right">
-                    <div class="graph__node graph__node--right"></div>
-                </div>`
+<div class="graph__node graph__node--right"></div>
+</div>`
+
 const pathTop =`<div class="graph__pathWrapper graph__pathWrapper--top">
-                    <div class="graph__path graph__path--top"></div>
-                </div> `
+<div class="graph__path graph__path--top"></div>
+</div> `
+
+// Mock Data
+const data = {
+    question: 'Choose from one of the available activities',
+    title: 'Slot ek aur activity teen bahut na insaanfi hain',
+    type: 0,
+    options: [
+        {
+            text: 'Attend workshop on <programming in python>',
+            effect: {
+                technical: 10
+            }
+        },
+        {
+            text: 'Go for <basketball> team selection',
+            effect: {
+                sports: 10
+            }
+        },
+        {
+            text: 'Take part in debate society',
+            effect: {
+                cultural: 10,
+                social: 10
+            }
+        },
+        {
+            text: 'Go home else trains will get crowded'
+        }
+    ]
+}
 
 // Helper functions
 const handleStyleProperties = (components, property, value) => components.forEach((element) => element.style[property] = value)
-const generateCard = (text) => `<div class="card__body">${text}</div>`
+const generateCard = (data) => `<div class="card__body">
+                                    <div class="card__question">
+                                        ${data.question}
+                                    </div>
+                                    <div class="card__options"> 
+                                        ${data.options.map((item,index) => `<div class="card__answer card__answer--${index}"> ${item.text} </div>`).join(' ')}
+                                    </div>
+                                </div>`
 
 // Selectors
 const graphPathsWrapper = document.getElementsByClassName("graph__pathWrapper");
@@ -65,7 +107,7 @@ for(let i=0; i<graphCol.length; i++){
 
 var currCard = ``
 for(let i=0; i<24; i++){
-    currCard += generateCard(`${i}th + Card`)
+    currCard += generateCard(data)
 }
 cardContainers.innerHTML = currCard
 
@@ -92,12 +134,12 @@ cardContainers.addEventListener("click", () => {
 
 // buttonNavigateLeft.addEventListener("click", () => {
 //     cn = Math.max(cn - 1, 0)
-    
+
 //     if(graphPaths[cn].classList.contains("graph__path--active")){
-        
+
 //         handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "none")
 //         graphPaths[cn].classList.toggle("graph__path--active")
-        
+
 //         setTimeout(() => {
 //             handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
 //             graphNodes[cn].classList.toggle("graph__node--active")
@@ -119,13 +161,13 @@ buttonNavigateRight.addEventListener("click", () => {
         
         setTimeout(() => {
             handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
-
+            
             graphPaths[cn-1].classList.toggle("graph__path--active")
             cardContainers.classList.toggle("card__container--active")
             if(graphNodes.length > cn){
                 graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
             }
-
+            
             setTimeout(() => {
                 cards[cn].classList.toggle("card__body--active")
             }, 501)
@@ -135,4 +177,12 @@ buttonNavigateRight.addEventListener("click", () => {
 })
 
 graphNodesWrapper[0].classList.toggle("graph__nodeWrapper--next");
+
+const answers = document.getElementsByClassName("card__answer");
+for(let i=0; i<answers.length; i++){
+    answers[i].addEventListener("click", () => {
+        console.log(answers[i].classList[1].slice(14), cn);
+    })
+}
+
 console.log("LAST")

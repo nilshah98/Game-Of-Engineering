@@ -191,7 +191,6 @@ a {
 }
 .card__body {
   width: 30rem;
-  height: 50rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -199,12 +198,36 @@ a {
   background: white;
   border-radius: 1rem;
   opacity: 0;
-  font-size: 4rem;
   transition: all 0.5s linear;
+  padding: 2rem;
 }
 .card__body--active {
   opacity: 1;
   transform: translate(-50%, -50%);
+}
+.card__question {
+  width: 100%;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+.card__options {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.5rem;
+}
+.card__answer {
+  cursor: pointer;
+  margin: 0.5rem 2px;
+  border: 1px solid var(--color-black);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.2s linear;
+}
+.card__answer:hover {
+  transform: translateY(2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 }
 
 .graphPage__wrapper {
@@ -225,10 +248,11 @@ a {
   position: relative;
 }
 .resumePage__body {
-  width: 35vw;
+  width: 100vw;
   height: 100vh;
   background: var(--color-white);
   margin: auto;
+  padding: 1rem 3rem;
 }
 
 .resume__title {
@@ -236,6 +260,8 @@ a {
   flex-direction: row;
   justify-content: center;
   font-size: 3rem;
+  margin: 2rem 0;
+  text-decoration: underline;
 }
 .resume__social {
   display: flex;
@@ -251,8 +277,15 @@ a {
 .resume__left, .resume__right {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: stretch;
+  max-width: 50rem;
+}
+.resume__left {
+  width: 60%;
+}
+.resume__right {
+  width: 40%;
 }
 .resume__education, .resume__experience, .resume__projects, .resume__honors, .resume__skills, .resume__hobbies {
   display: flex;
@@ -265,8 +298,8 @@ a {
   flex-direction: column;
 }
 .resume__entry--head {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 .resume__entry--details {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
