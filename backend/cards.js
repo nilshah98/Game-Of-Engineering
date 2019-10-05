@@ -42,7 +42,8 @@ function juniorTechSelector(parameters){
 		socialResponse.effect = {
 			technical : doubleSkillIncrement,
 			time: doubleTimeDecrement,
-			social: singleSkillIncrement
+			social: singleSkillIncrement,
+			whichCouncil: 'technical',
 		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Apply for the post';
@@ -69,7 +70,8 @@ function juniorSocialSelector(parameters){
 			social : doubleSkillIncrement,
 			time: doubleTimeDecrement,
 			cultural: doubleSkillIncrement,
-			management: doubleSkillIncrement
+			management: doubleSkillIncrement,
+			whichCouncil: 'social'
 		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Apply for the post';
@@ -95,7 +97,8 @@ function juniorTeamSelector(parameters){
 		socialResponse.effect = {
 			sports : doubleSkillIncrement,
 			social: singleSkillIncrement,
-			time: doubleTimeDecrement
+			time: doubleTimeDecrement,
+			whichCouncil: 'sport'
 		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Go for the selection';
