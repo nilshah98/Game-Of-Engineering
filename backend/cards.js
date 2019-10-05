@@ -147,22 +147,47 @@ function resultSelector(parameters) {
 	let pointerResponse = {}
 	if(decider >= 0.4 && pointer >= 55 && time >= 20) {
 		pointerResponse.effect = {
-			social: -10,
-			pointer: 20
+			social: singleSkillDecrement,
+			pointer: doubleSkillIncrement,
+			time: doubleTimeDecrement
 		};
 		pointerResponse.message = 'Congrats! Your efforts have payed off!! You have scored excellently';
 		pointerResponse.text = 'Cover all the topics briefly';
 	}
 	else {
 		pointerResponse.effect = {
-			social: -10,
-			pointer: 10
+			social: singleSkillDecrement,
+			pointer: singleSkillIncrement,
+			time: doubleTimeDecrement
 		}
 		pointerResponse.message = 'Congrats! Your efforts have payed off!!';
 		pointerResponse.text = 'Cover all topics briefly';
 	}
 	res.push(pointerResponse);
-}
+	pointerResponse = {};
+	decider = Math.random();
+	if( decider >= 0.7 && pointer >= 50 ) {
+		pointerResponse.effect = {
+			time: doubleTimeDecrement,
+			pointer: singleSkillIncrement,
+		}
+		pointerResponse.message = 'Congrats! Your efforts have payed off!!',
+		pointerResponse.text = 'Study only questions from previous papers'
+	}
+	else {
+		pointerResponse.effect = {},
+		pointerResponse.message = 'Consider studying not just for passing exams! You have scored okay',
+		pointerResponse.text = 'Study only questions from previous papers'
+	}
+	res.push(pointerResponse);
+	res.push({
+		effect: {
+			pointer: doubleSkillDecrement
+		},
+		text: 'Sleep and let god decide your fate'
+	});
+	return res;
+};
 
 // TODO: socialCouncil also append whichCouncil field
 
