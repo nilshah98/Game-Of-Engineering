@@ -1199,9 +1199,10 @@ const cards = [
 
 window.cards = cards;
 
-function updateStore(newParams,newQid){
+function updateStore(newParams,newQid,newCn){
 	localStorage.setItem("params",newParams);
 	localStorage.setItem("qid",newQid);
+	localStorage.setItem("cn",newCn)
 }
 
 function getStore(){
@@ -1216,5 +1217,8 @@ function getStore(){
 		time : 100,
 		pointer : 0
 	};
-	res.qid = localStorage.getItem("qid") || 1;
+	res.qid = localStorage.getItem("qid") || -1;
+	res.cn = localStorage.getItem("cn") || 0;
+
+	return res;
 }
