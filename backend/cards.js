@@ -383,7 +383,7 @@ const cards = [
 		},
 		question: 'Interviews for Juniors Positions at <cultural council> have begun, you might have a good shot at it',
 		title: 'Time to be an insider',
-		type: 0,
+		type: 1,
 		options: juniorSocialSelector
 	},
 	{
