@@ -24,7 +24,7 @@ function netaSelector(parameters){
 	res.push(socialResponse);
 	res.push({
 		text : 'Vote for a friend',
-		effect : {social : 10},
+		effect : {social : singleSkillIncrement},
 	});
 	res.push({
 		text : 'Do not participate',
