@@ -40,7 +40,9 @@ const  next_card = (answered_index,params,isPartOfCouncil)=>{
 
 const settleEffect = (effects,params)=>{
     for(var key in effects){
-        params[key] += effects; 
+        if(key=='whichCouncil')
+        isPartOfCouncil=effects[key];
+        params[key] += effects[key]; 
     }
 }
 
