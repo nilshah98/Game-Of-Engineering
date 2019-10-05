@@ -1,0 +1,44 @@
+.resume{
+    &__title{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        font-size: 3rem;
+    }
+
+    &__social{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    &__data{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: stretch;
+    }
+    &__left, &__right{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: stretch;
+    }
+    &__education, &__experience, &__projects, &__honors, &__skills, &__hobbies{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: stretch;
+    }
+    &__entry{
+        display: flex;
+        flex-direction: column;
+
+        &--head{
+            font-size: 2.5rem;
+        }
+        &--details{
+            font-size: 1.5rem;
+        }
+    }
+
+}
