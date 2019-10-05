@@ -139,7 +139,6 @@ function icpcSelector(parameters){
 	return res
 };
 
-// TODO: add function
 function resultSelector(parameters) {
 	let res = [];
 	let decider = Math.random();
@@ -188,8 +187,6 @@ function resultSelector(parameters) {
 	});
 	return res;
 };
-
-// TODO: socialCouncil also append whichCouncil field
 
 const cards = [
     {
