@@ -145,9 +145,8 @@ function resultSelector(parameters) {
 	let decider = Math.random();
 	let {pointer, time} = parameters;
 	let pointerResponse = {}
-	if(decider >= 0.4 && pointer >= 55 && time >= 0) {
+	if(decider >= 0.4 && pointer >= 55 && time >= 20) {
 		pointerResponse.effect = {
-			time: -50,
 			social: -10,
 			pointer: 20
 		};
@@ -156,13 +155,13 @@ function resultSelector(parameters) {
 	}
 	else {
 		pointerResponse.effect = {
-			time: -50,
 			social: -10,
 			pointer: 10
 		}
 		pointerResponse.message = 'Congrats! Your efforts have payed off!!';
-		pointerResponse.text = 'Cover all topics briefly'
+		pointerResponse.text = 'Cover all topics briefly';
 	}
+	res.push(pointerResponse);
 }
 
 // TODO: socialCouncil also append whichCouncil field
