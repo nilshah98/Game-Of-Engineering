@@ -1,6 +1,10 @@
 import "../sass/main.scss";
 // Globals
 var cn = 0;
+var qid = 0;
+var isCouncil = false;
+
+var params = {"technical": 0, "social": 0, "time": 0, "pointer": 0, "cultural": 0, "management":0, "sports":0 };
 
 // Graph builder strings
 const pathLeft =`<div class="graph__pathWrapper graph__pathWrapper--left">
@@ -23,60 +27,62 @@ const pathTop =`<div class="graph__pathWrapper graph__pathWrapper--top">
 <div class="graph__path graph__path--top"></div>
 </div> `
 
-// Mock Data
-const data = {
-    question: 'Choose from one of the available activities',
-    title: 'Slot ek aur activity teen bahut na insaanfi hain',
-    type: 0,
-    options: [
-        {
-            text: 'Attend workshop on <programming in python>',
-            effect: {
-                technical: 10
-            }
-        },
-        {
-            text: 'Go for <basketball> team selection',
-            effect: {
-                sports: 10
-            }
-        },
-        {
-            text: 'Take part in debate society',
-            effect: {
-                cultural: 10,
-                social: 10
-            }
-        },
-        {
-            text: 'Go home else trains will get crowded'
-        }
-    ]
-}
-
 // Helper functions
-const handleStyleProperties = (components, property, value) => components.forEach((element) => element.style[property] = value)
 const generateCard = (data) => `<div class="card__body">
-                                    <div class="card__question">
-                                        ${data.question}
-                                    </div>
-                                    <div class="card__options"> 
-                                        ${data.options.map((item,index) => `<div class="card__answer card__answer--${index}"> ${item.text} </div>`).join(' ')}
-                                    </div>
-                                </div>`
+    <div class="card__question">
+    ${data.question}
+    </div>
+    <div class="card__options"> 
+    ${data.options.map((item,index) => `<div class="card__answer card__answer--${index}"> ${item.text} </div>`).join(' ')}
+    </div>
+    </div>`
+
+const generateTooltip = (data, location) => `<div class="toolTip__container"><div class="toolTip__body--${location}>
+${data}
+</div></div>`
+
+const getNextCard = (optionId) => {
+    const result = cards[qid].options[optionId].effect
+    isCouncil = settleEffect(result, params, isCouncil)
+    console.log(params)
+
+    // tech | time | social | pointer
+    let percent = 100-params["technical"]
+    paramsRes[0].style.transform = `translateY(${percent}%)`
+    percent = 100 - params["time"]
+    paramsRes[1].style.transform = `translateY(${percent}%)`
+    percent = 100 - params["social"]
+    paramsRes[2].style.transform = `translateY(${percent}%)`
+    percent = 100 - params["pointer"]
+    paramsRes[3].style.transform = `translateY(${percent}%)`
+    
+
+    let nextCard = next_card(qid, params, isCouncil);
+    console.log(nextCard,"before")
+    while(!nextCard.hasOwnProperty("title")){
+        if(nextCard.isVacation){
+            params["time"] = 100;
+        }
+        qid += 1
+        nextCard = next_card(qid, params, isCouncil)
+    }
+    qid = nextCard.id - 1;
+    
+    return generateCard(nextCard)
+}
 
 // Selectors
 const graphPathsWrapper = document.getElementsByClassName("graph__pathWrapper");
 const graphPaths = document.getElementsByClassName("graph__path");
 const graphNodesWrapper = document.getElementsByClassName("graph__nodeWrapper");
 const graphNodes = document.getElementsByClassName("graph__node");
-const buttonNavigateLeft = document.getElementsByClassName("buttonNavigate__button--left")[0];
-const buttonNavigateRight = document.getElementsByClassName("buttonNavigate__button--right")[0];
 const cardContainers = document.getElementsByClassName("card__container")[0];
-const cards = document.getElementsByClassName("card__body");
+const cardBodies = document.getElementsByClassName("card__body");
 const graphRow = document.getElementsByClassName("graph__row");
 const graphCol = document.getElementsByClassName("graph__col");
 const graphPageWrapper = document.getElementsByClassName("graphPage__wrapper")[0];
+// tech | time | social | pointer
+const paramsRes = document.getElementsByClassName("params__fill");
 
 // Graph Build
 var currPath = ``
@@ -106,83 +112,66 @@ for(let i=0; i<graphCol.length; i++){
 }
 
 var currCard = ``
-for(let i=0; i<24; i++){
-    currCard += generateCard(data)
-}
+currCard += generateCard(next_card(-1,params,false))
 cardContainers.innerHTML = currCard
 
 // Event-Listeners
 
-// Node click disabled 
-// for(let i = 0; i < graphNodesWrapper.length; i++){
-//     graphNodesWrapper[i].addEventListener("click", () => {
-//         console.log(`${i} Node clicked`)
-//         cardContainers.classList.toggle("card__container--active");
-//         cards[i].classList.toggle("card__body--active")
-//     })
-// }
+for(let i=0; i<graphNodesWrapper.length; i++){
+    graphNodesWrapper[i].addEventListener("click", () => {
+        graphPageWrapper.classList.toggle("graphPage__wrapper--active")
+        cardContainers.classList.toggle("card__container--active")
+        setTimeout(() => cardBodies[cn].classList.toggle("card__body--active"), 301)
+    })
+}
 
 cardContainers.addEventListener("click", () => {
     graphPageWrapper.classList.toggle("graphPage__wrapper--active")
-    for(let i=0; i<cards.length; i++){
-        if(cards[i].classList.contains("card__body--active")){
-            cards[i].classList.toggle("card__body--active")
+    for(let i=0; i<cardBodies.length; i++){
+        if(cardBodies[i].classList.contains("card__body--active")){
+            cardBodies[i].classList.toggle("card__body--active")
         }
     }
     setTimeout(() => cardContainers.classList.toggle("card__container--active"), 301);
 })
 
-// buttonNavigateLeft.addEventListener("click", () => {
-//     cn = Math.max(cn - 1, 0)
-
-//     if(graphPaths[cn].classList.contains("graph__path--active")){
-
-//         handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "none")
-//         graphPaths[cn].classList.toggle("graph__path--active")
-
-//         setTimeout(() => {
-//             handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
-//             graphNodes[cn].classList.toggle("graph__node--active")
-//             graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--active")
-//         }, 501)
-//     }    
-// })
-
-buttonNavigateRight.addEventListener("click", () => {
-    cn = Math.min(cn + 1, graphPathsWrapper.length)
-    
-    if(!graphPaths[cn-1].classList.contains("graph__path--active")){
-        
-        handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "none")
-        graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
-        graphNodes[cn - 1].classList.toggle("graph__node--active")
-        graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
-        graphPageWrapper.classList.toggle("graphPage__wrapper--active")
-        
-        setTimeout(() => {
-            handleStyleProperties([buttonNavigateLeft, buttonNavigateRight], "pointerEvents", "auto")
-            
-            graphPaths[cn-1].classList.toggle("graph__path--active")
-            cardContainers.classList.toggle("card__container--active")
-            if(graphNodes.length > cn){
-                graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
-            }
-            
-            setTimeout(() => {
-                cards[cn].classList.toggle("card__body--active")
-            }, 501)
-            
-        },501)
-    }
-})
 
 graphNodesWrapper[0].classList.toggle("graph__nodeWrapper--next");
 
+const answersEventListener = () => {
 const answers = document.getElementsByClassName("card__answer");
 for(let i=0; i<answers.length; i++){
     answers[i].addEventListener("click", () => {
-        console.log(answers[i].classList[1].slice(14), cn);
+        const id = [answers[i].classList[1].slice(14), qid]
+        let nextCard = getNextCard(id[0],id[1])
+        cardContainers.innerHTML += nextCard
+        answersEventListener();
+        
+        cn = Math.min(cn + 1, graphPathsWrapper.length)
+        
+        if(!graphPaths[cn-1].classList.contains("graph__path--active")){
+            
+            graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
+            graphNodes[cn - 1].classList.toggle("graph__node--active")
+            graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
+            
+            
+            setTimeout(() => {
+                
+                graphPaths[cn-1].classList.toggle("graph__path--active")
+                
+                if(graphNodes.length > cn){
+                    graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
+                }
+                
+            },501)
+        } 
     })
 }
+}
+
+answersEventListener();
+
+
 
 console.log("LAST")

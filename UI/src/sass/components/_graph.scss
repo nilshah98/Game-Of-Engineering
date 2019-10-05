@@ -50,6 +50,7 @@
         width: 3rem;
         overflow: hidden;
         border-radius: 100%;
+        cursor: pointer;
 
         &--active{
             animation: focus .5s linear;

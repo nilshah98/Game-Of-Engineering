@@ -17,6 +17,7 @@
         position: relative;
         transition: all .3s linear;
         background: var(--color-white-dark);
+        display: none;
 
         &:hover, &:active{
             transform: translateY(.5rem);
@@ -24,7 +25,6 @@
         }
 
         &--left{
-            display: none;
             &:before{
                 content: "‹";
                 display: inline-block;
