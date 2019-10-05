@@ -1,7 +1,7 @@
 var  next_card = (answered_index,params,isPartOfCouncil)=>{
     let current_index = answered_index+1;
     let current_card = {};
-    while(current_index<len(cards))
+    while(current_index<cards.length)
     {
         current_card = cards[current_index];
         // if(social>=current_card.social && pointer>=current_card.pointer)
@@ -12,9 +12,9 @@ var  next_card = (answered_index,params,isPartOfCouncil)=>{
         // }
         let requirement = current_card.requirement;
         let flag = false;
-        for(var keys in reqiurement)
+        for(var keys in requirement)
         {
-            if(requirement[keys]<=params[keys])
+            if(requirement[keys]>=params[keys])
             {
                 flag = true;
                 break;
@@ -29,8 +29,8 @@ var  next_card = (answered_index,params,isPartOfCouncil)=>{
         {
             if(current_card.type===1)
             {
-                const random_function = current_card.option;
-                current_card.option=random_function(params);
+                const random_function = current_card.options;
+                current_card.options=random_function(params);
             }
             return current_card;
         }
@@ -38,4 +38,4 @@ var  next_card = (answered_index,params,isPartOfCouncil)=>{
     }
 }
 
-export {next_card};
+//export {next_card};

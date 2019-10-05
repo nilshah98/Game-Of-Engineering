@@ -401,7 +401,7 @@ const cards = [
 		},
 		question: 'Interviews for Juniors Positions at <cultural council> have begun, you might have a good shot at it',
 		title: 'Time to be an insider',
-		type: 0,
+		type: 1,
 		options: juniorSocialSelector
 	},
 	{
@@ -747,4 +747,4 @@ const cards = [
 // title
 // type (0 => static, 1 => dynamic [responsive] )
 // options: [{text, effect, message}, ...]
-module.exports = cards;
+//export {cards};
