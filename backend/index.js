@@ -3,7 +3,7 @@
 // all others: half
 
 const singleTimeDecrement = -25, doubleTimeDecrement = -50;
-const singleSkillDecrement = -10, doubleTimeDecrement = -20;
+const singleSkillDecrement = -10, doubleSkillDecrement = -20;
 const singleSkillIncrement = 10, doubleSkillIncrement = 20;
 const singleTimeIncrement = 25, doubleTimeIncrement = 50;
 
@@ -36,7 +36,7 @@ function netaSelector(parameters){
 function juniorTechSelector(parameters){
 	let res = [];
 	let decider = Math.random();
-	let {social} = parameters;
+	let {technical} = parameters;
 	let socialResponse = {}
 	if(decider >= 0.5 && technical >= 20){
 		socialResponse.effect = {technical : 20,time:-10};//Todo @Parshva
@@ -58,7 +58,7 @@ function juniorTechSelector(parameters){
 function juniorTeamSelector(parameters){
 	let res = [];
 	let decider = Math.random();
-	let {social} = parameters;
+	let {sports} = parameters;
 	let socialResponse = {}
 	if(decider >= 0.5 && sports >= 20){
 		socialResponse.effect = {sports : 20,time: -10};//Todo @Parshva
@@ -68,6 +68,28 @@ function juniorTeamSelector(parameters){
 		socialResponse.effect = {};
 		socialResponse.message = 'Better luck next time!!';
 		socialResponse.text = 'Go for the selection';
+	}
+	res.push(socialResponse);
+	res.push({
+		text : 'Not intrested to apply',
+		effect : {},
+	});
+	return res
+};
+
+function icpcSelector(parameters){
+	let res = [];
+	let decider = Math.random();
+	let {technical} = parameters;
+	let socialResponse = {}
+	if(decider >= 0.5 && technical >= 20){
+		socialResponse.effect = {technical : 20,time: -10};//Todo @Parshva
+		socialResponse.message = 'Congrats Your Team Qualified';
+		socialResponse.text = 'Apply for ICPC';
+	} else {
+		socialResponse.effect = {};
+		socialResponse.message = 'Better luck next time!!';
+		socialResponse.text = 'Apply for ICPC';
 	}
 	res.push(socialResponse);
 	res.push({
@@ -261,20 +283,21 @@ const cards = [
 				text: 'Enroll for that course and dedicate yourself',
 				effect: {
 					technical: doubleSkillIncrement,
+					time: doubleTimeDecrement
 				}
 			},
 			{
 				text: 'Enroll for course and work half-assed',
 				effect: {
-					technical: 10,
-					time: -25
+					technical: singleSkillIncrement,
+					time: singleTimeDecrement
 				}
 			},
 			{
 				text: 'Enroll for another pocket friendly lighter course',
 				effect: {
-					technical: 10,
-					time: -25
+					technical: singleSkillIncrement,
+					time: singleTimeDecrement
 				}
 			},
 			{
@@ -310,14 +333,14 @@ const cards = [
 			{
 				text: 'Accept and lead your team',
 				effect: {
-					time: -25,
-					social: 10
+					time: singleSkillIncrement,
+					social: singleTimeDecrement
 				}
 			},
 			{
 				text: 'Accept and work',
 				effect: {
-					social: 10
+					social: singleSkillIncrement
 				}
 			},
 			{
@@ -333,7 +356,8 @@ const cards = [
 	{
 		id : 12,
 		requirement: {
-			social: 75,
+			social: 55,
+			time: 75
 		},
 		question: 'Interviews for Juniors Positions at <cultural council> have begun, you might have a good shot at it',
 		title: 'Time to be an insider',
@@ -362,14 +386,14 @@ const cards = [
 			{
 				text: 'Yes',
 				effect: {
-					time: 25,
+					time: singleTimeIncrement,
 				}
 			},
 			{
 				text: 'No',
 				effect: {
-					time: -50,
-					cultural: 20
+					time: doubleTimeDecrement,
+					cultural: doubleSkillIncrement
 				}
 			}
 		]
@@ -386,11 +410,25 @@ const cards = [
 			{
 				text : 'Take a lead, form a team, train guys',
 				effect : {
-					
+					time : doubleTimeDecrement,
+					social : singleSkillIncrement,
+					management : doubleSkillIncrement,
+					sports : doubleSkillIncrement
 				}
 			},
 			{
-				text : ''
+				text : 'Be a part of the team, play to the best of your ability',
+				effect : {
+					sports : singleSkillIncrement,
+					time : singleTimeDecrement,
+					social : singleSkillIncrement
+				}
+			},
+			{
+				text : 'Leave the team to loose on their own',
+				effect : {
+					management : doubleSkillDecrement
+				}
 			}
 		]
 	},
@@ -404,32 +442,32 @@ const cards = [
 			{
 				text: 'Forsake work for studies',
 				effect: {
-					pointer: -20,
-					time: -25,
-					management: 20
+					pointer: doubleSkillIncrement,
+					time: singleTimeDecrement,
+					management: singleSkillDecrement
 				}
 			},
 			{
 				text: 'Complete work and also try to study',
 				effect: {
-					time: -50,
-					management: 10
+					time: doubleTimeDecrement,
+					management: singleSkillIncrement
 				}
 			},
 			{
 				text: 'Complete work and go to sleep',
 				effect: {
-					time: -25,
-					pointer: -20,
-					management: 10
+					time: singleTimeDecrement,
+					pointer: doubleSkillDecrement,
+					management: singleSkillIncrement
 				}
 			},
 			{
 				text: 'Study well and do some work',
 				effect: {
-					time: -25,
-					pointer: 10,
-					management: 10
+					time: singleTimeDecrement,
+					pointer: singleSkillIncrement,
+					management: singleSkillIncrement
 				}
 			}
 		]
@@ -447,31 +485,31 @@ const cards = [
 			{
 				text : 'Forsake work for studies',
 				effect : {
-					pointer : -20,
-					time : -25,
-					management : 20
+					pointer : doublePointerIncrement,
+					time : singleTimeDecrement,
+					management : singleSkillDecrement
 				}
 			},
 			{
 				text : 'Complete work and also try to study',
 				effect : {
-					time : -50,
-					management : 10
+					time : doubleTimeDecrement,
+					management : singleSkillIncrement
 				}
 			},
 			{
 				text : 'Complete work and go to sleep',
 				effect : {
-					time : -25,
-					pointer : -50,
-					management : 10
+					time : singleTimeDecrement,
+					pointer : doubleSkillDecrement,
+					management : singleSkillIncrement
 				}
 			},
 			{
 				text : 'Study well and do some work',
 				effect : {
-					time : -25,
-					pointer : 10,
+					time : singleTimeDecrement,
+					pointer : singleSkillIncrement,
 				}
 			}
 		]
@@ -485,23 +523,23 @@ const cards = [
 			{
 				text: 'Copy',
 				effect: {
-					technical: -10,
-					time: 25,
-					pointer: -10
+					technical: singleSkillDecrement,
+					time: singleTimeIncrement,
+					pointer: singleSkillDecrement
 				}
 			},
 			{
 				text: 'Use it as a reference and make your own',
 				effect: {
-					time: -25
+					time: singleTimeDecrement
 				}
 			},
 			{
 				text: 'Make your own',
 				effect: {
-					time: -50,
-					technical: 20,
-					pointer: 10
+					time: doubleTimeDecrement,
+					technical: doubleSkillIncrement,
+					pointer: singleSkillIncrement
 				}
 			}
 		]
@@ -536,6 +574,31 @@ const cards = [
 	},
 	{
 		id : 20,
+		title : 'Opportunity knocks at your door',
+		type : 0,
+		question : 'There is an opportunity to drive the entire marketing campaign for you college fest. You\'ll be the go-to person for all the decisions',
+		requirement : {},
+		options : [
+			{
+				text : 'Accept responsibilty and work hard on it',
+				effect : {
+					time : doubleTimeDecrement,
+					management : doubleSkillIncrement
+				}
+			},
+			{
+				text : 'Accept responsibilty and work hard on it',
+				effect : {
+					time : singleTimeIncrement,
+					management : singleSkillIncrement,
+					social : singleSkillDecrement
+				}
+			},
+			{
+				text : 'Defer title to someone else',
+				effect : {}
+			}
+		]
 	},
 	{
 		id : 21,
@@ -544,10 +607,46 @@ const cards = [
 		title : 'Let the world know a legend is in making',
 		question : '<ACM ICPC> has been announced, it is one of the biggest contests that once could be a part of it',
 		// TODO : ADD RANDOMIZER,
-		options : netaSelector
+		options : icpcSelector
 	},
 	{
-		id : 22
+		id : 22,
+		type : 0,
+		title : 'Mini-Project is not so mini',
+		question : 'You have your mini project submission approaching. Your teammate though has been busy with other works and hasn\'t contributed anything as of now',
+		requirement : {},
+		options : [
+			{
+				text : 'Convince and pressurise the friend into contributing',
+				effect : {
+					social : singleSkillIncrement,
+					time : singleTimeDecrement,
+					technical : singleSkillIncrement,
+					pointer : singleSkillDecrement
+				}
+			},
+			{
+				text : 'Take it in your own hands and get it done yourself',
+				effect : {
+					time: doubleTimeDecrement,
+					technical: doubleSkillIncrement
+				}
+			},
+			{
+				text : 'Do justice to your part and leave the remaining part as it is',
+				effect : {
+					pointer : doubleSkillDecrement,
+					technical: singleSkillIncrement
+				}
+			},
+			{
+				text : 'Use some ready made project and use the remaining time to study for approaching test',
+				effect : {
+					technical: doubleSkillDecrement,
+					time: singleTimeDecrement
+				}
+			}
+		]
 	},
 	{
 		id : 23,
@@ -561,36 +660,43 @@ const cards = [
 			{
 				text : 'Forsake work for studies',
 				effect : {
-					pointer : -20,
-					time : -25,
-					management : 20
+					pointer : doubleSkillDecrement,
+					time : singleTimeDecrement,
+					sports : doubleSkillIncrement
 				}
 			},
 			{
 				text : 'Complete work and also try to study',
 				effect : {
-					time : -50,
-					management : 10
+					time : doubleTimeDecrement,
+					sports : singleSkillIncrement
 				}
 			},
 			{
 				text : 'Complete work and go to sleep',
 				effect : {
-					time : -25,
-					pointer : -50,
-					management : 10
+					time : singleTimeDecrement,
+					pointer : doubleSKillDecrement,
+					sports : singleSkillIncrement
 				}
 			},
 			{
 				text : 'Study well and do some work',
 				effect : {
-					time : -25,
-					pointer : 10,
+					time : singleTimeDecrement,
+					pointer : singleSkillIncrement,
+					sports: singleSkillIncrement
 				}
 			}
 		]
 	},
-	{}
+	{
+		id : 24,
+		isVacation : true,
+	},
+	{
+		id : 25
+	}
 ];
 
 // Mock format
