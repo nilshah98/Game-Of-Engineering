@@ -601,4 +601,4 @@ const cards = [
 // title
 // type (0 => static, 1 => dynamic [responsive] )
 // options: [{text, effect, message}, ...]
-export default cards;
+//export {cards};

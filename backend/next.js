@@ -38,4 +38,4 @@ var  next_card = (answered_index,params,isPartOfCouncil)=>{
     }
 }
 
-export {next_card};
+//export {next_card};
