@@ -1,0 +1,191 @@
+@charset "UTF-8";
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root {
+  --color-primary: #f56a6a;
+  --color-secondary: #118cff;
+  --color-white: #fff;
+  --color-white-dark: #ddd;
+  --color-black: #222;
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+a {
+  text-decoration: none;
+}
+
+.graph__container {
+  display: inline-block;
+  height: 100%;
+  padding: 2rem;
+}
+.graph__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.graph__row--reverse {
+  flex-direction: row-reverse;
+}
+.graph__col {
+  display: flex;
+  flex-direction: row;
+  margin: 0 0 0 1rem;
+}
+.graph__col--reverse {
+  flex-direction: row-reverse;
+  margin: 0 1rem 0 0;
+}
+.graph__pathWrapper {
+  outline: 1px solid var(--color-primary);
+  position: relative;
+  overflow: hidden;
+}
+.graph__pathWrapper--left, .graph__pathWrapper--right {
+  width: 15vw;
+  height: 1rem;
+}
+.graph__pathWrapper--top {
+  width: 1rem;
+  height: 10rem;
+}
+.graph__nodeWrapper {
+  height: 3rem;
+  width: 3rem;
+  border: 1px solid var(--color-secondary);
+  overflow: hidden;
+  border-radius: 100%;
+  cursor: pointer;
+}
+.graph__nodeWrapper--active {
+  animation: focus 0.5s linear;
+}
+.graph__path {
+  background: var(--color-primary);
+  transition: all 0.5s linear;
+}
+.graph__path--left, .graph__path--right {
+  height: 1rem;
+  width: 15vw;
+}
+.graph__path--left {
+  transform: translate(-15vw, 0);
+}
+.graph__path--right {
+  transform: translate(15vw, 0);
+}
+.graph__path--top {
+  width: 1rem;
+  height: 10rem;
+  transform: translate(0, -10rem);
+}
+.graph__path--active {
+  transform: translate(0, 0);
+}
+.graph__node {
+  height: 3.5rem;
+  width: 3.5rem;
+  background: var(--color-secondary);
+  transition: all 0.5s linear;
+  transform: translate(-3.4rem);
+}
+.graph__node--right {
+  transform: translateX(3.4rem);
+}
+.graph__node--active {
+  transform: translateX(0);
+}
+
+@keyframes focus {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 4rem rgba(17, 140, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+  }
+}
+.buttonNavigate__container {
+  position: fixed;
+  bottom: 5rem;
+  right: 5rem;
+}
+.buttonNavigate__button {
+  height: 5rem;
+  width: 5rem;
+  display: inline-block;
+  cursor: pointer;
+  margin: 1rem;
+  border-radius: 100%;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+  position: relative;
+  transition: all 0.3s linear;
+}
+.buttonNavigate__button:hover, .buttonNavigate__button:active {
+  transform: translateY(0.5rem);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+}
+.buttonNavigate__button--left:before {
+  content: "‹";
+  display: inline-block;
+  position: relative;
+  font-size: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.buttonNavigate__button--right:before {
+  content: "›";
+  display: inline-block;
+  position: relative;
+  font-size: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.card__container {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+.card__container--active {
+  display: block;
+}
+.card__body {
+  width: 30rem;
+  height: 50rem;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 1rem;
+  display: none;
+  font-size: 4rem;
+}
+.card__body--active {
+  display: block;
+}

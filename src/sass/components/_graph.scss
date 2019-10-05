@@ -1,0 +1,109 @@
+.graph{
+    &__container{
+        display: inline-block;
+        height: 100%;
+        padding: 2rem;
+    }
+
+    &__row{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &--reverse{
+            flex-direction: row-reverse;
+        }
+    }
+
+    &__col{
+        display: flex;
+        flex-direction: row;
+        margin: 0 0 0 1rem;
+
+        &--reverse{
+            flex-direction: row-reverse;
+            margin: 0 1rem 0 0;
+        }
+    }
+
+    &__pathWrapper{
+        outline: 1px solid var(--color-primary);
+        position: relative;
+        overflow: hidden;
+
+        &--left, &--right{
+            width: 15vw;
+            height: 1rem;
+        }
+
+        &--top{
+            width: 1rem;
+            height: 10rem;
+        }
+    }
+
+    &__nodeWrapper{
+        height: 3rem;
+        width: 3rem;
+        border: 1px solid var(--color-secondary);
+        overflow: hidden;
+        border-radius: 100%;
+        cursor: pointer;
+
+        &--active{
+            animation: focus .5s linear;
+        }
+    }
+
+    &__path{
+        background: var(--color-primary);
+        transition: all .5s linear;
+
+        &--left, &--right{
+            height: 1rem;
+            width: 15vw;
+        }
+        &--left{
+            transform: translate(-15vw,0);
+        }
+        &--right{
+            transform: translate(15vw,0);
+        }
+        &--top{
+            width: 1rem;
+            height: 10rem;
+            transform: translate(0,-10rem)
+        }
+        &--active{
+            transform: translate(0,0);
+        }
+    }
+
+    &__node{
+        height: 3.5rem;
+        width: 3.5rem;
+        background: var(--color-secondary);
+        transition: all .5s linear;
+        transform: translate(-3.4rem);
+
+        &--right{
+            transform: translateX(3.4rem);
+        }
+
+        &--active{
+            transform: translateX(0);
+        }
+    }
+}
+
+@keyframes focus {
+    0% {
+        box-shadow: 0 0 0 rgba(0,0,0,0.5);
+    }
+    50%{
+        box-shadow: 0 0 4rem rgba(17,140,255,0.5);
+    }
+    100%{
+        box-shadow: 0 0 0 rgba(0,0,0,0.5);
+    }
+}

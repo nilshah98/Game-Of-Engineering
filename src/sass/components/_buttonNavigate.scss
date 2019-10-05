@@ -1,0 +1,46 @@
+.buttonNavigate{
+    
+    &__container{
+        position: fixed;
+        bottom: 5rem;
+        right: 5rem;
+    }
+
+    &__button{
+        height: 5rem;
+        width: 5rem;
+        display: inline-block;
+        cursor: pointer;
+        margin: 1rem;
+        border-radius: 100%;
+        box-shadow: 0 1rem 2rem rgba(0,0,0,0.5);
+        position: relative;
+        transition: all .3s linear;
+
+        &:hover, &:active{
+            transform: translateY(.5rem);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,0.4);
+        }
+
+        &--left{
+            &:before{
+                content: "‹";
+                display: inline-block;
+                position: relative;
+                font-size: 4rem;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        &--right{
+            &:before{
+                content: "›";
+                display: inline-block;
+                position: relative;
+                font-size: 4rem;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}
