@@ -6,9 +6,10 @@
         position: relative;
     }
     &__body{
-        width: 35vw;
+        width: 100vw;
         height: 100vh;
         background: var(--color-white);
         margin: auto;
+        padding: 1rem 3rem;
     }
 }

@@ -15,7 +15,6 @@
 
     &__body{
         width: 30rem;
-        height: 50rem;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -23,12 +22,38 @@
         background: rgba(255,255,255);
         border-radius: 1rem;
         opacity: 0;
-        font-size: 4rem;
         transition: all .5s linear;
+        padding: 2rem;
 
         &--active{
             opacity: 1;
             transform: translate(-50%, -50%);
+        }
+    }
+
+    &__question{
+        width: 100%;
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    &__options{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        font-size: 1.5rem;
+    }
+    &__answer{
+        cursor: pointer;
+        margin: .5rem 2px;
+        border: 1px solid var(--color-black);
+        border-radius: .5rem;
+        padding: 1rem;
+        transition: all .2s linear;
+
+        &:hover{
+            transform: translateY(2px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,0.5);
         }
     }
 }
