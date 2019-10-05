@@ -16,6 +16,7 @@
         box-shadow: 0 1rem 2rem rgba(0,0,0,0.5);
         position: relative;
         transition: all .3s linear;
+        background: var(--color-white-dark);
 
         &:hover, &:active{
             transform: translateY(.5rem);
@@ -23,6 +24,7 @@
         }
 
         &--left{
+            display: none;
             &:before{
                 content: "‹";
                 display: inline-block;

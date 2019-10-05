@@ -26,16 +26,26 @@ body {
   overflow-x: hidden;
   width: 100vw;
   height: 100vh;
+  background: var(--color-white);
 }
 
 a {
   text-decoration: none;
 }
 
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 31.25%;
+  }
+}
 .graph__container {
   display: inline-block;
   height: 100%;
   padding: 2rem;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .graph__row {
   display: flex;
@@ -55,12 +65,11 @@ a {
   margin: 0 1rem 0 0;
 }
 .graph__pathWrapper {
-  outline: 1px solid var(--color-primary);
   position: relative;
   overflow: hidden;
 }
 .graph__pathWrapper--left, .graph__pathWrapper--right {
-  width: 15vw;
+  width: 12vw;
   height: 1rem;
 }
 .graph__pathWrapper--top {
@@ -70,13 +79,14 @@ a {
 .graph__nodeWrapper {
   height: 3rem;
   width: 3rem;
-  border: 1px solid var(--color-secondary);
   overflow: hidden;
   border-radius: 100%;
-  cursor: pointer;
 }
 .graph__nodeWrapper--active {
   animation: focus 0.5s linear;
+}
+.graph__nodeWrapper--next {
+  border: 2px solid var(--color-secondary);
 }
 .graph__path {
   background: var(--color-primary);
@@ -84,13 +94,13 @@ a {
 }
 .graph__path--left, .graph__path--right {
   height: 1rem;
-  width: 15vw;
+  width: 12vw;
 }
 .graph__path--left {
-  transform: translate(-15vw, 0);
+  transform: translate(-12vw, 0);
 }
 .graph__path--right {
-  transform: translate(15vw, 0);
+  transform: translate(12vw, 0);
 }
 .graph__path--top {
   width: 1rem;
@@ -105,13 +115,14 @@ a {
   width: 3.5rem;
   background: var(--color-secondary);
   transition: all 0.5s linear;
-  transform: translate(-3.4rem);
+  transform: translate(-3.5rem);
 }
 .graph__node--right {
-  transform: translateX(3.4rem);
+  transform: translateX(3.5rem);
 }
 .graph__node--active {
   transform: translateX(0);
+  cursor: pointer;
 }
 
 @keyframes focus {
@@ -140,10 +151,14 @@ a {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
   position: relative;
   transition: all 0.3s linear;
+  background: var(--color-white-dark);
 }
 .buttonNavigate__button:hover, .buttonNavigate__button:active {
   transform: translateY(0.5rem);
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+}
+.buttonNavigate__button--left {
+  display: none;
 }
 .buttonNavigate__button--left:before {
   content: "‹";
@@ -177,15 +192,81 @@ a {
 .card__body {
   width: 30rem;
   height: 50rem;
-  position: relative;
+  position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -250%);
   background: white;
   border-radius: 1rem;
-  display: none;
+  opacity: 0;
   font-size: 4rem;
+  transition: all 0.5s linear;
 }
 .card__body--active {
-  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.graphPage__wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: var(--color-black);
+  transition: all 0.2s linear;
+}
+.graphPage__wrapper--active {
+  transform: scale(0.8);
+}
+
+.resumePage__wrapper {
+  width: 100vw;
+  height: 100vh;
+  background: var(--color-white-dark);
+  position: relative;
+}
+.resumePage__body {
+  width: 35vw;
+  height: 100vh;
+  background: var(--color-white);
+  margin: auto;
+}
+
+.resume__title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 3rem;
+}
+.resume__social {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.resume__data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.resume__left, .resume__right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.resume__education, .resume__experience, .resume__projects, .resume__honors, .resume__skills, .resume__hobbies {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+.resume__entry {
+  display: flex;
+  flex-direction: column;
+}
+.resume__entry--head {
+  font-size: 2.5rem;
+}
+.resume__entry--details {
+  font-size: 1.5rem;
 }
