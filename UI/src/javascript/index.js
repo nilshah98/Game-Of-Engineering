@@ -1,10 +1,12 @@
 import "../sass/main.scss";
 // Globals
-var cn = 0;
-var qid = 0;
+var {cn, qid, n_qid, params} = getStore();
 var isCouncil = false;
-
-var params = {"technical": 0, "social": 0, "time": 0, "pointer": 0, "cultural": 0, "management":0, "sports":0 };
+console.log(cn, qid, n_qid, params);
+let nextCard = {}
+// Since cards are fetched from 0, whereas nodes from cn
+// Hence creates an offset, which will be constant
+const offSet = cn;
 
 // Graph builder strings
 const pathLeft =`<div class="graph__pathWrapper graph__pathWrapper--left">
@@ -41,13 +43,50 @@ const generateTooltip = (data, location) => `<div class="toolTip__container"><di
 ${data}
 </div></div>`
 
-const getNextCard = (optionId) => {
-    const result = cards[qid].options[optionId].effect
-    isCouncil = settleEffect(result, params, isCouncil)
-    console.log(params)
+const messageWrapper = document.getElementsByClassName("message__wrapper")[0];
+const messageBody = document.getElementsByClassName("message__body")[0];
 
+messageWrapper.addEventListener("click", () => messageWrapper.classList.toggle("message__wrapper--active"))
+
+const getNextCard = (optionId) => {
+    // Get result for the current question number and option
+    // qid and optionId
+    // cardBodies = DOMCards
+    // cards = question-cards
+    console.log(cards[qid])
+    const result = nextCard.options[optionId].effect
+    isCouncil = settleEffect(result, params, isCouncil)
+    messageBody.classList.remove("message__body--danger");
+    messageBody.classList.remove("message__body--warning");
+    messageBody.classList.remove("message__body--success");
+
+    for(var k in params){
+        if(params[k] < 0){
+            console.log("GAMEOVER",k)
+            messageBody.textContent = `GAME OVER! Your ${k} has gone below 0`;
+            messageWrapper.classList.toggle("message__wrapper--active");
+            messageBody.classList.add("message__body--danger");
+            // window.localStorage.clear();
+            // params = {social : 50,technical : 50,goal : undefined,management : 50,cultural : 50,sports : 50,time : 100,pointer : 0};
+            // updateStore(params,0,0)
+            localStorage.clear()
+            var newRes = getStore();
+            cn = newRes.cn
+            qid = newRes.qid
+            params = newRes.params
+            setTimeout(() => location.reload(),1500)
+            break;
+        }
+        else if(params[k] < 20){
+            messageBody.textContent = `WARNING! Your ${k} has gone below 20`;
+            messageWrapper.classList.toggle("message__wrapper--active");
+            messageBody.classList.add("message__body--warning");
+        }
+    }
+
+    // Resume animations
     // tech | time | social | pointer
-    let percent = 100-params["technical"]
+    let percent = 100-(params["technical"]+params["management"]+params["sports"]+params["cultural"])/4
     paramsRes[0].style.transform = `translateY(${percent}%)`
     percent = 100 - params["time"]
     paramsRes[1].style.transform = `translateY(${percent}%)`
@@ -56,19 +95,29 @@ const getNextCard = (optionId) => {
     percent = 100 - params["pointer"]
     paramsRes[3].style.transform = `translateY(${percent}%)`
     
-
-    let nextCard = next_card(qid, params, isCouncil);
-    console.log(nextCard,"before")
+    // Get nextcard for the provided qid, params and isCouncil
+    qid = n_qid;
+    nextCard = next_card(qid, params, isCouncil);
+    n_qid = nextCard.id;
+    // While the nextCard does not have "title" parameter, keep fetching
     while(!nextCard.hasOwnProperty("title")){
         if(nextCard.isVacation){
             params["time"] = 100;
+            messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`;
+            messageWrapper.classList.toggle("message__wrapper--active");
+            messageBody.classList.add("message__body--info");
         }
-        qid += 1
+        qid = n_qid
         nextCard = next_card(qid, params, isCouncil)
+        n_qid = nextCard.id
     }
-    qid = nextCard.id - 1;
-    
-    return generateCard(nextCard)
+
+    // Get the id for next card, since numbered ad 1,2,3,4....
+    // console.log(nextCard);
+    // updateStore(params,qid,n_qid,cn);
+
+    // Return the card generated for the next question
+    return (nextCard)
 }
 
 // Selectors
@@ -77,12 +126,14 @@ const graphPaths = document.getElementsByClassName("graph__path");
 const graphNodesWrapper = document.getElementsByClassName("graph__nodeWrapper");
 const graphNodes = document.getElementsByClassName("graph__node");
 const cardContainers = document.getElementsByClassName("card__container")[0];
-const cardBodies = document.getElementsByClassName("card__body");
+var cardBodies = document.getElementsByClassName("card__body");
 const graphRow = document.getElementsByClassName("graph__row");
 const graphCol = document.getElementsByClassName("graph__col");
 const graphPageWrapper = document.getElementsByClassName("graphPage__wrapper")[0];
 // tech | time | social | pointer
 const paramsRes = document.getElementsByClassName("params__fill");
+const paramDots = document.getElementsByClassName("params__dot")
+
 
 // Graph Build
 var currPath = ``
@@ -93,6 +144,7 @@ for(let i=0; i<5; i++){
 currPath += nodeLeft
 graphRow[0].innerHTML = currPath
 graphRow[2].innerHTML = currPath
+graphRow[4].innerHTML = currPath
 
 currPath = ``
 for(let i=0; i<5; i++){
@@ -111,17 +163,59 @@ for(let i=0; i<graphCol.length; i++){
     graphCol[i].innerHTML = currPath
 }
 
+// Inializers
+// Path => cn
+for(let i=0; i<cn; i++){
+    graphNodesWrapper[i].classList.add("graph__nodeWrapper--active");
+    graphPathsWrapper[i].classList.add("graph__pathWrapper--active");
+    graphPaths[i].classList.add("graph__path--active");
+    graphNodes[i].classList.add("graph__node--active");
+}
+
+// Question => qid
 var currCard = ``
-currCard += generateCard(next_card(-1,params,false))
-cardContainers.innerHTML = currCard
+nextCard = next_card(qid,params,false)
+console.log("***********************************",nextCard);
+console.log(qid);
+n_qid = nextCard.id;
+// keep fetching till nextCard has title
+while(!nextCard.hasOwnProperty("title")){
+    console.log("loop")
+    if(nextCard.isVacation){
+        params["time"] = 100;
+        messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem)}`;
+        messageWrapper.classList.toggle("message__wrapper--active");
+        messageBody.classList.add("message__body--danger");
+    }
+    qid = n_qid;
+    nextCard = next_card(qid, params, isCouncil)
+    n_qid = nextCard.id;
+}
+// Cannot update here, since no necessary that the question has been answered;
+// qid = nextCard.id;
+currCard += generateCard(nextCard);
+cardContainers.innerHTML = currCard;
+
+// Result
+let percent = 100-params["technical"]
+paramsRes[0].style.transform = `translateY(${percent}%)`
+percent = 100 - params["time"]
+paramsRes[1].style.transform = `translateY(${percent}%)`
+percent = 100 - params["social"]
+paramsRes[2].style.transform = `translateY(${percent}%)`
+percent = 100 - params["pointer"]
+paramsRes[3].style.transform = `translateY(${percent}%)`
 
 // Event-Listeners
-
 for(let i=0; i<graphNodesWrapper.length; i++){
     graphNodesWrapper[i].addEventListener("click", () => {
         graphPageWrapper.classList.toggle("graphPage__wrapper--active")
         cardContainers.classList.toggle("card__container--active")
-        setTimeout(() => cardBodies[cn].classList.toggle("card__body--active"), 301)
+        setTimeout(() => {
+            // cn - offset since ossible that on 5th node, but first card
+            // since earlier cards not rendered
+            cardBodies[cn-offSet].classList.toggle("card__body--active")
+        }, 301)
     })
 }
 
@@ -136,20 +230,64 @@ cardContainers.addEventListener("click", () => {
 })
 
 
-graphNodesWrapper[0].classList.toggle("graph__nodeWrapper--next");
+graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next");
 
 const answersEventListener = () => {
 const answers = document.getElementsByClassName("card__answer");
 for(let i=0; i<answers.length; i++){
     answers[i].addEventListener("click", () => {
         const id = [answers[i].classList[1].slice(14), qid]
-        let nextCard = getNextCard(id[0],id[1])
-        cardContainers.innerHTML += nextCard
+
+        // console.log(id, "OPTION CLICKED");
+        let snextCard = getNextCard(id[0],id[1])
+        cardContainers.innerHTML += generateCard(snextCard)
+
+        for(let j=answers.length - snextCard.options.length; j<answers.length; j++){
+            answers[j].addEventListener("mouseover", () => {
+                for(let i=0; i<paramDots.length; i++){
+                    // paramDots[i].classList.remove("params__dot--positive")
+                    // paramDots[i].classList.remove("params__dot--negative")   
+                }
+                console.log("HOVER", snextCard.options)
+                for(var k in snextCard.options[j - answers.length + snextCard.options.length].effect){
+                    console.log(k,j - answers.length + snextCard.options.length)
+                    if(k === "time"){
+                        paramDots[1].classList.toggle("params__dot--active")
+                    }else if(k === "social"){
+                        paramDots[2].classList.toggle("params__dot--active")
+                    }else if(k === "pointer"){
+                        paramDots[3].classList.toggle("params__dot--active")
+                    }else{
+                        paramDots[0].classList.toggle("params__dot--active")
+                    }
+                }
+            })
+            answers[j].addEventListener("mouseout", () => {
+                for(let i=0; i<paramDots.length; i++){
+                    // paramDots[i].classList.remove("params__dot--positive")
+                    // paramDots[i].classList.remove("params__dot--negative")   
+                }
+                for(var k in snextCard.options[j - answers.length + snextCard.options.length].effect){
+                    if(k === "time"){
+                        paramDots[1].classList.toggle("params__dot--active")
+                    }else if(k === "social"){
+                        paramDots[2].classList.toggle("params__dot--active")
+                    }else if(k === "pointer"){
+                        paramDots[3].classList.toggle("params__dot--active")
+                    }else{
+                        paramDots[0].classList.toggle("params__dot--active")
+                    }
+                }
+            })
+        }
         answersEventListener();
+
         
         cn = Math.min(cn + 1, graphPathsWrapper.length)
         
         if(!graphPaths[cn-1].classList.contains("graph__path--active")){
+
+            updateStore(params,qid,cn);
             
             graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
             graphNodes[cn - 1].classList.toggle("graph__node--active")
@@ -158,7 +296,7 @@ for(let i=0; i<answers.length; i++){
             
             setTimeout(() => {
                 
-                graphPaths[cn-1].classList.toggle("graph__path--active")
+                graphPaths[cn - 1].classList.toggle("graph__path--active")
                 
                 if(graphNodes.length > cn){
                     graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
@@ -171,7 +309,5 @@ for(let i=0; i<answers.length; i++){
 }
 
 answersEventListener();
-
-
 
 console.log("LAST")

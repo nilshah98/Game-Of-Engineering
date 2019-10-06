@@ -1,8 +1,8 @@
 let queue = [];
 const  next_card = (answered_index,params,isPartOfCouncil)=>{
-    let current_index = answered_index+1;
+    let current_index = answered_index;
     let current_card = {};
-    while(current_index<cards.length)
+    while(current_index < cards.length)
     {
         current_card = cards[current_index];
         let requirement = current_card.requirement;
@@ -22,8 +22,10 @@ const  next_card = (answered_index,params,isPartOfCouncil)=>{
         }
         if(flag===false)
         {
+            console.log("expand");
             if(current_card.type===1)
             {
+                console.log("call random");
                 const random_function = current_card.options;
                 current_card.options=random_function(params);
             }
@@ -41,15 +43,8 @@ const settleEffect = (effects,params,isPartOfCouncil)=>{
         }
         else
         {
-            if(key == 'resume')
-            {
-                queue.push(effects[key])
-            }
-            else
-            {
-                params[key] += effects[key];
-                params[key]=(params[key]>100)?(100):(params[key])
-            }
+            params[key] += effects[key];
+            params[key]=(params[key]>100)?(100):(params[key]);
         }
     }
     return isPartOfCouncil;

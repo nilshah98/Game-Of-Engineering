@@ -61,6 +61,7 @@ function juniorTechSelector(parameters){
 };
 
 function juniorSocialSelector(parameters){
+	console.log("qawsedrf");
 	let res = [];
 	let decider = Math.random();
 	let {social} = parameters;
@@ -78,7 +79,7 @@ function juniorSocialSelector(parameters){
 	} else {
 		socialResponse.effect = {};
 		socialResponse.message = 'Better luck next time!!';
-		socialResponse.text = 'Apply for the post';
+		socialResponse.text = 'Apply for the Post';
 	}
 	res.push(socialResponse);
 	res.push({
@@ -229,6 +230,8 @@ function finalYearProjectSelector(parameters) {
 			pointer: doubleSkillIncrement
 		}
 	});
+
+	return res;
 }
 
 const cards = [
@@ -365,12 +368,14 @@ const cards = [
 		options : [
 			{
 				text : 'You\'re in!!',
-				effect : {}
+				effect : {
+					time: doubleTimeDecrement
+				}
 			},
 			{
 				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
 				effect : {
-					time : doubleTimeDecrement,
+					time : doubleTimeIncrement,
 					social : doubleSkillIncrement 
 				}
 			},
@@ -378,7 +383,7 @@ const cards = [
 	},
 	{
 		id: 8,
-		requirement: {},
+		requirement: {time: 40},
 		question: `Hey Guys, Its Siraj! Your favourite tech Youtuber is starting a new certified course machine learning. It's a 5 week course requiring daily commitment for an hour`,
 		title: 'MOOCs',
 		type: 0,
@@ -430,7 +435,7 @@ const cards = [
 	{
 		id: 10,
 		requirement: {},
-		question: 'Best out of Waste! This is a <beach cleanup drive on Verspva beach>',
+		question: 'Best out of Waste! This is a <beach cleanup drive on Versova beach>',
 		title: 'Volunteer for Social Work! Paap dhulao soul bachao',
 		type: 0,
 		options: [
@@ -459,6 +464,7 @@ const cards = [
 	},
 	{
 		id : 12,
+		whichCouncil: false,
 		requirement: {
 			social: 55,
 			time: 75
@@ -470,6 +476,7 @@ const cards = [
 	},
 	{
 		id : 13,
+		whichCouncil: false,
 		requirement : {
 			technical : 30,
 			time : 75
@@ -650,6 +657,7 @@ const cards = [
 	},
 	{
 		id : 19,
+		whichCouncil: false,
 		requirement : {
 			sports : 20,
 		},
@@ -681,7 +689,10 @@ const cards = [
 		title : 'Opportunity knocks at your door',
 		type : 0,
 		question : 'There is an opportunity to drive the entire marketing campaign for you college fest. You\'ll be the go-to person for all the decisions',
-		requirement : {},
+		requirement : {
+			social: 30,
+			management: 40
+		},
 		options : [
 			{
 				text : 'Accept responsibilty and work hard on it',
@@ -812,7 +823,7 @@ const cards = [
 			{
 				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
 				effect : {
-					time : doubleTimeDecrement,
+					time : doubleSkillIncrement,
 					social : doubleSkillIncrement 
 				}
 			},
@@ -924,7 +935,7 @@ const cards = [
 		id: 31,
 		whichCouncil: 'technical',
 		requirement: {technical: 50},
-		question: 'Apply for Head Positions at Cultural council you have been a part of, you might have a good shot at it ',
+		question: 'Apply for Head Positions at Technical council you have been a part of, you might have a good shot at it ',
 		title: 'With great power comes great responsibility',
 		type: 0,
 		options: [
@@ -932,7 +943,7 @@ const cards = [
 				text: 'Apply for the post',
 				effect: {
 					time: doubleTimeDecrement, 
-					social: doubleSkillIncrement, 
+					technical: doubleSkillIncrement, 
 				}
 			},
 			{
@@ -974,7 +985,7 @@ const cards = [
 	},
 	{
 		id: 33,
-		requirement: {technical: 40},
+		requirement: {technical: 40, social: 10},
 		question: 'Smart India Hackthon has been announced, it is one of the biggest Hackathon that one could be a part of it',
 		title: 'Mere yuva bhaiya or beheno',
 		type: 0,
@@ -1045,7 +1056,7 @@ const cards = [
 	},
 	{
 		id : 37,
-		requirement: {},
+		requirement: {technical: 70},
 		question: 'You have enough skills and want to try for some industrial experience so you are trying to land an internship',
 		title: 'Internships',
 		type: 0,
@@ -1095,7 +1106,8 @@ const cards = [
 	},
     {
         id:39,
-        title:'Placement',
+		title:'Placement',
+		question: 'With companies like Morgan Stanley coming up, would you devote time to prepare for entrance',
         type : 0,
 		options : [
 			{
@@ -1107,8 +1119,7 @@ const cards = [
 			},
 			{
 				text : 'Just Chill',
-				effect : {
-				}
+				effect : {}
 			}
 		]
         
@@ -1168,7 +1179,7 @@ const cards = [
 		id : 44,
 		requirement : {},
 		type : 0,
-		title : 'Relax or Redemption/ Akhri Koshish',
+		title : 'Relax or Redemption',
 		question : 'Now that you are done with attempting a shot at your goal. Relax and work on improving your pointer try some and prepare for something else focus on improving your pointer',
 		options : [
 			{
@@ -1200,14 +1211,17 @@ const cards = [
 window.cards = cards;
 
 function updateStore(newParams,newQid,newCn){
-	localStorage.setItem("params",newParams);
-	localStorage.setItem("qid",newQid);
-	localStorage.setItem("cn",newCn)
+	console.log(newQid, newCn);
+	localStorage.setItem("params",JSON.stringify(newParams));
+	localStorage.setItem("qid",String(newQid));
+	localStorage.setItem("cn",String(newCn))
 }
 
 function getStore(){
 	let res = {};
-	res.params = localStorage.getItem("params") || {
+	res.params = localStorage.getItem("params")
+		? JSON.parse(localStorage.getItem("params"))
+		:{
 		social : 50,
 		technical : 50,
 		goal : undefined,
@@ -1217,8 +1231,8 @@ function getStore(){
 		time : 100,
 		pointer : 0
 	};
-	res.qid = localStorage.getItem("qid") || -1;
-	res.cn = localStorage.getItem("cn") || 0;
+	res.qid = parseInt(localStorage.getItem("qid")) || 0;
+	res.cn = parseInt(localStorage.getItem("cn")) || 0;
 
 	return res;
 }
