@@ -103,6 +103,9 @@ const getNextCard = (optionId) => {
     while(!nextCard.hasOwnProperty("title")){
         if(nextCard.isVacation){
             params["time"] = 100;
+            messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`;
+            messageWrapper.classList.toggle("message__wrapper--active");
+            messageBody.classList.add("message__body--info");
         }
         qid = n_qid
         nextCard = next_card(qid, params, isCouncil)
@@ -180,6 +183,9 @@ while(!nextCard.hasOwnProperty("title")){
     console.log("loop")
     if(nextCard.isVacation){
         params["time"] = 100;
+        messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem)}`;
+        messageWrapper.classList.toggle("message__wrapper--active");
+        messageBody.classList.add("message__body--danger");
     }
     qid = n_qid;
     nextCard = next_card(qid, params, isCouncil)

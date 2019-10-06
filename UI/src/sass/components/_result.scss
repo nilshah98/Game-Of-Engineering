@@ -18,20 +18,19 @@
         transition: all .3s linear;
     }
     &__tech{
-        -webkit-mask: url('../../assets/code-solid.svg') no-repeat 50% 50%;
+        -webkit-mask: url('../../assets/cogs-solid.svg') no-repeat 50% 50%;
     }
     &__time{
-        -webkit-mask: url('../../assets/hourglass-regular.svg') no-repeat 50% 50%;
+        -webkit-mask: url('../../assets/hourglass-solid.svg') no-repeat 50% 50%;
     }
     &__social{
         -webkit-mask: url('../../assets/users-solid.svg') no-repeat 50% 50%;
     }
     &__pointer{
-        -webkit-mask: url('../../assets/graduation-cap-solid.svg') no-repeat 50% 50%;
-
+        -webkit-mask: url('../../assets/user-graduate-solid.svg') no-repeat 50% 50%;
     }
     &__item{
-        -webkit-mask-size: cover;
+        -webkit-mask-size: contain;
         overflow: hidden;
         margin: .5rem 2rem;
         height: 5rem;
