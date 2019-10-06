@@ -249,6 +249,8 @@ function finalYearProjectSelector(parameters) {
 			pointer: doubleSkillIncrement
 		}
 	});
+
+	return res;
 }
 
 const cards = [
@@ -1158,7 +1160,8 @@ const cards = [
 	},
     {
         id:39,
-        title:'Placement',
+		title:'Placement',
+		question: 'With companies like Morgan Stanley coming up, would you devote time to prepare for entrance',
         type : 0,
 		options : [
 			{
