@@ -66,6 +66,7 @@ function juniorTechSelector(parameters){
 };
 
 function juniorSocialSelector(parameters){
+	console.log("qawsedrf");
 	let res = [];
 	let decider = Math.random();
 	let {social} = parameters;
@@ -88,7 +89,7 @@ function juniorSocialSelector(parameters){
 	} else {
 		socialResponse.effect = {};
 		socialResponse.message = 'Better luck next time!!';
-		socialResponse.text = 'Apply for the post';
+		socialResponse.text = 'Apply for the Post';
 	}
 	res.push(socialResponse);
 	res.push({

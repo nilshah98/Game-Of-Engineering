@@ -27,8 +27,10 @@ const  next_card = (answered_index,params,isPartOfCouncil)=>{
         }
         if(flag===false)
         {
+            console.log("expand");
             if(current_card.type===1)
             {
+                console.log("call random");
                 const random_function = current_card.options;
                 current_card.options=random_function(params);
             }

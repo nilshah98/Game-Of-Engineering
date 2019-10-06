@@ -1,10 +1,12 @@
 import "../sass/main.scss";
 // Globals
-var cn = 0;
-var qid = 0;
+var {cn, qid, n_qid, params} = getStore();
 var isCouncil = false;
-
-var params = {"technical": 0, "social": 0, "time": 0, "pointer": 0, "cultural": 0, "management":0, "sports":0 };
+console.log(cn, qid, n_qid, params);
+let nextCard = {}
+// Since cards are fetched from 0, whereas nodes from cn
+// Hence creates an offset, which will be constant
+const offSet = cn;
 
 // Graph builder strings
 const pathLeft =`<div class="graph__pathWrapper graph__pathWrapper--left">
@@ -42,10 +44,15 @@ ${data}
 </div></div>`
 
 const getNextCard = (optionId) => {
-    const result = cards[qid].options[optionId].effect
+    // Get result for the current question number and option
+    // qid and optionId
+    // cardBodies = DOMCards
+    // cards = question-cards
+    console.log(cards[qid])
+    const result = nextCard.options[optionId].effect
     isCouncil = settleEffect(result, params, isCouncil)
-    console.log(params)
 
+    // Resume animations
     // tech | time | social | pointer
     let percent = 100-params["technical"]
     paramsRes[0].style.transform = `translateY(${percent}%)`
@@ -56,18 +63,25 @@ const getNextCard = (optionId) => {
     percent = 100 - params["pointer"]
     paramsRes[3].style.transform = `translateY(${percent}%)`
     
-
-    let nextCard = next_card(qid, params, isCouncil);
-    console.log(nextCard,"before")
+    // Get nextcard for the provided qid, params and isCouncil
+    qid = n_qid;
+    nextCard = next_card(qid, params, isCouncil);
+    n_qid = nextCard.id;
+    // While the nextCard does not have "title" parameter, keep fetching
     while(!nextCard.hasOwnProperty("title")){
         if(nextCard.isVacation){
             params["time"] = 100;
         }
-        qid += 1
+        qid = n_qid
         nextCard = next_card(qid, params, isCouncil)
+        n_qid = nextCard.id
     }
-    qid = nextCard.id - 1;
-    
+
+    // Get the id for next card, since numbered ad 1,2,3,4....
+    // console.log(nextCard);
+    updateStore(params,qid,n_qid,cn);
+
+    // Return the card generated for the next question
     return generateCard(nextCard)
 }
 
@@ -93,6 +107,7 @@ for(let i=0; i<5; i++){
 currPath += nodeLeft
 graphRow[0].innerHTML = currPath
 graphRow[2].innerHTML = currPath
+graphRow[4].innerHTML = currPath
 
 currPath = ``
 for(let i=0; i<5; i++){
@@ -111,17 +126,56 @@ for(let i=0; i<graphCol.length; i++){
     graphCol[i].innerHTML = currPath
 }
 
+// Inializers
+// Path => cn
+for(let i=0; i<cn; i++){
+    graphNodesWrapper[i].classList.add("graph__nodeWrapper--active");
+    graphPathsWrapper[i].classList.add("graph__pathWrapper--active");
+    graphPaths[i].classList.add("graph__path--active");
+    graphNodes[i].classList.add("graph__node--active");
+}
+
+// Question => qid
 var currCard = ``
-currCard += generateCard(next_card(-1,params,false))
-cardContainers.innerHTML = currCard
+nextCard = next_card(qid,params,false)
+console.log("***********************************",nextCard);
+console.log(qid);
+n_qid = nextCard.id;
+// keep fetching till nextCard has title
+while(!nextCard.hasOwnProperty("title")){
+    console.log("loop")
+    if(nextCard.isVacation){
+        params["time"] = 100;
+    }
+    qid = n_qid;
+    nextCard = next_card(qid, params, isCouncil)
+    n_qid = nextCard.id;
+}
+// Cannot update here, since no necessary that the question has been answered;
+// qid = nextCard.id;
+currCard += generateCard(nextCard);
+cardContainers.innerHTML = currCard;
+
+// Result
+let percent = 100-params["technical"]
+paramsRes[0].style.transform = `translateY(${percent}%)`
+percent = 100 - params["time"]
+paramsRes[1].style.transform = `translateY(${percent}%)`
+percent = 100 - params["social"]
+paramsRes[2].style.transform = `translateY(${percent}%)`
+percent = 100 - params["pointer"]
+paramsRes[3].style.transform = `translateY(${percent}%)`
 
 // Event-Listeners
-
 for(let i=0; i<graphNodesWrapper.length; i++){
     graphNodesWrapper[i].addEventListener("click", () => {
         graphPageWrapper.classList.toggle("graphPage__wrapper--active")
         cardContainers.classList.toggle("card__container--active")
-        setTimeout(() => cardBodies[cn].classList.toggle("card__body--active"), 301)
+        setTimeout(() => {
+            // cn - offset since ossible that on 5th node, but first card
+            // since earlier cards not rendered
+            cardBodies[cn-offSet].classList.toggle("card__body--active")
+        }, 301)
     })
 }
 
@@ -136,20 +190,24 @@ cardContainers.addEventListener("click", () => {
 })
 
 
-graphNodesWrapper[0].classList.toggle("graph__nodeWrapper--next");
+graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next");
 
 const answersEventListener = () => {
 const answers = document.getElementsByClassName("card__answer");
 for(let i=0; i<answers.length; i++){
     answers[i].addEventListener("click", () => {
         const id = [answers[i].classList[1].slice(14), qid]
-        let nextCard = getNextCard(id[0],id[1])
-        cardContainers.innerHTML += nextCard
+
+        console.log(id, "OPTION CLICKED");
+        let snextCard = getNextCard(id[0],id[1])
+        cardContainers.innerHTML += snextCard
         answersEventListener();
         
         cn = Math.min(cn + 1, graphPathsWrapper.length)
         
         if(!graphPaths[cn-1].classList.contains("graph__path--active")){
+
+            updateStore(params,qid,cn);
             
             graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
             graphNodes[cn - 1].classList.toggle("graph__node--active")
@@ -158,7 +216,7 @@ for(let i=0; i<answers.length; i++){
             
             setTimeout(() => {
                 
-                graphPaths[cn-1].classList.toggle("graph__path--active")
+                graphPaths[cn - 1].classList.toggle("graph__path--active")
                 
                 if(graphNodes.length > cn){
                     graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
@@ -171,7 +229,5 @@ for(let i=0; i<answers.length; i++){
 }
 
 answersEventListener();
-
-
 
 console.log("LAST")
