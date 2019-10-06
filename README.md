@@ -1,7 +1,7 @@
 <div align="center">
   <h1> Guide-Me </h1>
   <p> An attempt at making a guide for college life </p>
-  <img width=300px src="./assets/Briefly.png" alt="Guide-Me"></a>
+  <img width=300px src="./UI/assets/logo.png" alt="Guide-Me"></a>
 </div>
 
 
