@@ -1,3 +1,4 @@
+let queue = [];
 const  next_card = (answered_index,params,isPartOfCouncil)=>{
     let current_index = answered_index+1;
     let current_card = {};
@@ -40,15 +41,22 @@ const settleEffect = (effects,params,isPartOfCouncil)=>{
         }
         else
         {
-            params[key] += effects[key];
-            params[key]=(params[key]>100)?(100):(params[key])
+            if(key == 'resume')
+            {
+                queue.push(effects[key])
+            }
+            else
+            {
+                params[key] += effects[key];
+                params[key]=(params[key]>100)?(100):(params[key])
+            }
         }
     }
     return isPartOfCouncil;
 }
 
 const resume = ()=>{
-    
+
 }
 
 //export {next_card};
