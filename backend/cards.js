@@ -395,7 +395,7 @@ const cards = [
 			{
 				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
 				effect : {
-					time : doubleTimeDecrement,
+					time : doubleTimeIncrement,
 					social : doubleSkillIncrement 
 				}
 			},
@@ -489,6 +489,7 @@ const cards = [
 	},
 	{
 		id : 12,
+		whichCouncil: false,
 		requirement: {
 			social: 55
 		},
@@ -499,6 +500,7 @@ const cards = [
 	},
 	{
 		id : 13,
+		whichCouncil: false,
 		requirement : {
 			technical : 30,
 		},
@@ -678,6 +680,7 @@ const cards = [
 	},
 	{
 		id : 19,
+		whichCouncil: false,
 		requirement : {
 			sports : 20,
 		},
@@ -863,7 +866,7 @@ const cards = [
 			{
 				text : 'Opting out',
 				effect : {
-					time : doubleTimeDecrement,
+					time : doubleSkillIncrement,
 					social : doubleSkillIncrement 
 				}
 			},
@@ -1174,8 +1177,7 @@ const cards = [
 			},
 			{
 				text : 'Just Chill',
-				effect : {
-				}
+				effect : {}
 			}
 		]
         
@@ -1235,7 +1237,7 @@ const cards = [
 		id : 44,
 		requirement : {},
 		type : 0,
-		title : 'Relax or Redemption/ Akhri Koshish',
+		title : 'Relax or Redemption',
 		question : 'Now that you are done with attempting a shot at your goal. Relax and work on improving your pointer try some and prepare for something else focus on improving your pointer',
 		options : [
 			{
