@@ -27,10 +27,7 @@
 - `Subscriptions` for a news source
 - `Bookmark` an article
 - `Summarize` an source article or a url
-- Browse across ~ 255 preffered source listed [here](./App/sources.csv)
-- Featured Article as per all user reaction ( Also an Add-Ons )
-- `Night-Mode` for better readiblity
-- Subscribe to your favorite source using `chatbot` and read it on your own comfort from the `web-app`
+- Supports `multiple paths`
 
 <div align="center">
 
@@ -53,42 +50,25 @@
 
 - [ ] Share your resume template which reflects your achievements throughout college life
 - [ ] A guide that routes you through the game
+- [ ] Response handler that alerts user on the decision taken by randomizer
 - [ ] Add More
 
 ------------------------------------------
 ### File Structure
 
 
-#### ChatBot
+#### Decision Tree
 
-- `App` : Source code for chatbot
-- `Scrappers` : Scrapper for maintaining inital news distribution across web-app and chatbot using firebase . Deployment of this would result in frequent update the news
+- [@coggle](https://coggle.it/diagram/XZYkMBcw7rYSSX4w/t/welcome-to-engineering-the-game-of-engineer's-life/7f1b26de836f53b8caaed49a709f6a5d22ed3d1874f79f2df917442fbdc088ea)
 
-#### Web-App
 
-- Repository [here](https://github.com/inishchith/Briefly-web/tree/master)
-
-------------------------------------------
-### Installation
-
-* Install dependencies
-```sh
-        $ pip3 install -r requirements.txt
-```
-
-* Edit [config.py](https://github.com/inishchith/Briefly/blob/master/App/config.py)
-
-* Add :fire:firebase project credentials here [1](https://github.com/inishchith/Briefly/blob/master/App/subscribe.py) [2](https://github.com/inishchith/Briefly-web/blob/master/mhack/basic_app/subscribe.py)
-
-------------------------------------------
 ### Contributing
 
- We're are open to `enhancements` & `bug-fixes` :smile: Also do have a look [here](./CONTRIBUTING.md)
+ We're are open to `enhancements` & `bug-fixes` :smile: 
 
 ### Note
 
 - This project was done under `24 hours with minimal pre-preparation`
-- Extended capabilities of scraper to `Indian Languages` ( Hindi & Marathi supported as of now)
 
 ------------------------------------------
 ### Contributors
@@ -102,3 +82,4 @@
 ### Recognition
 
 This repository / project was a part of [@KJSCEHack](https://github.com/kjsce-codecell) 2019
+
