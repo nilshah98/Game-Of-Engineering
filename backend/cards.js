@@ -385,7 +385,9 @@ const cards = [
 		options : [
 			{
 				text : 'You\'re in!!',
-				effect : {}
+				effect : {
+					time: doubleTimeDecrement
+				}
 			},
 			{
 				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
@@ -398,7 +400,7 @@ const cards = [
 	},
 	{
 		id: 8,
-		requirement: {},
+		requirement: {time: 40},
 		question: `Hey Guys, Its Siraj! Your favourite tech Youtuber is starting a new certified course machine learning. It's a 5 week course requiring daily commitment for an hour`,
 		title: 'MOOCs',
 		type: 0,
@@ -450,7 +452,7 @@ const cards = [
 	{
 		id: 10,
 		requirement: {},
-		question: 'Best out of Waste! This is a <beach cleanup drive on Verspva beach>',
+		question: 'Best out of Waste! This is a <beach cleanup drive on Versova beach>',
 		title: 'Volunteer for Social Work! Paap dhulao soul bachao',
 		type: 0,
 		options: [
@@ -705,7 +707,8 @@ const cards = [
 		type : 0,
 		question : 'There is an opportunity to drive the entire marketing campaign for you college fest. You\'ll be the go-to person for all the decisions',
 		requirement : {
-			social: 30
+			social: 30,
+			management: 40
 		},
 		options : [
 			{
@@ -974,7 +977,7 @@ const cards = [
 		id: 31,
 		whichCouncil: 'technical',
 		requirement: {technical: 50},
-		question: 'Apply for Head Positions at Cultural council you have been a part of, you might have a good shot at it ',
+		question: 'Apply for Head Positions at Technical council you have been a part of, you might have a good shot at it ',
 		title: 'With great power comes great responsibility',
 		type: 0,
 		options: [
@@ -982,7 +985,7 @@ const cards = [
 				text: 'Apply for the post',
 				effect: {
 					time: doubleTimeDecrement, 
-					social: doubleSkillIncrement, 
+					technical: doubleSkillIncrement, 
 				}
 			},
 			{
@@ -1024,7 +1027,7 @@ const cards = [
 	},
 	{
 		id: 33,
-		requirement: {technical: 40},
+		requirement: {technical: 40, social: 10},
 		question: 'Smart India Hackthon has been announced, it is one of the biggest Hackathon that one could be a part of it',
 		title: 'Mere yuva bhaiya or beheno',
 		type: 0,
@@ -1100,7 +1103,7 @@ const cards = [
 	},
 	{
 		id : 37,
-		requirement: {},
+		requirement: {technical: 70},
 		question: 'You have enough skills and want to try for some industrial experience so you are trying to land an internship',
 		title: 'Internships',
 		type: 0,
