@@ -1,5 +1,5 @@
 <div align="center">
-  <h1> Guide-Me </h1>
+  <h1> Game Of Engineering a.k.a. [Guide-Me] </h1>
   <p> An attempt at making a guide for college life </p>
   <img width=300px height=300px src="./UI/assets/logo.png" alt="Guide-Me"></a>
 </div>
@@ -31,11 +31,12 @@
 <h3 > Game of Engineering as PWA  </h3>
 <br>
 <p align="center">
-<img src ="./UI/assets/pwa.jpg" width = 500px height = 500px>
+ <img src ="./UI/assets/pwa.jpg" width = auto height = 500px>
+<img src ="./UI/assets/pwa-question.jpg" width = auto height = 500px>
 </p>
 
 <h3><a href="http://gameofengineering-4102c.firebaseapp.com">  Check out our PWA   </a></h3>
-  <img src = "./UI/assets/pwa-question.png" width = 500px height = 500px >
+  <img src = "./UI/assets/longer-path.png" width = auto height = 500px >
 </div>
 
 ------------------------------------------
