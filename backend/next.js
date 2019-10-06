@@ -1,7 +1,7 @@
 const  next_card = (answered_index,params,isPartOfCouncil)=>{
-    let current_index = answered_index+1;
+    let current_index = answered_index;
     let current_card = {};
-    while(current_index<cards.length)
+    while(current_index < cards.length)
     {
         current_card = cards[current_index];
         // if(social>=current_card.social && pointer>=current_card.pointer)
