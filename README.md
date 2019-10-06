@@ -31,12 +31,17 @@
 <h3 > Game of Engineering as PWA  </h3>
 <br>
 <p align="center">
+  <kbd>
  <img src ="./UI/assets/pwa.jpg" width = auto height = 500px>
+  </kbd>
+  <kbd>
 <img src ="./UI/assets/pwa-question.jpg" width = auto height = 500px>
+  </kbd>
 </p>
 
 <h3><a href="http://gameofengineering-4102c.firebaseapp.com">  Check out our PWA   </a></h3>
-  <img src = "./UI/assets/longer-path.png" width = auto height = 500px >
+<kbd>  <img src = "./UI/assets/longer-path.png" width = auto height = 500px >
+</kbd>
 </div>
 
 ------------------------------------------
