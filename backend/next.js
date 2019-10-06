@@ -49,7 +49,7 @@ const settleEffect = (effects,params,isPartOfCouncil)=>{
         else
         {
             params[key] += effects[key];
-            params[key]=(params[key]>100)?(100):(params[key])
+            params[key]=(params[key]>100)?(100):(params[key]);
         }
     }
     return isPartOfCouncil;

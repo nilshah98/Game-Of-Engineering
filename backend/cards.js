@@ -489,6 +489,7 @@ const cards = [
 	},
 	{
 		id : 12,
+		whichCouncil: false,
 		requirement: {
 			social: 55
 		},
@@ -499,6 +500,7 @@ const cards = [
 	},
 	{
 		id : 13,
+		whichCouncil: false,
 		requirement : {
 			technical : 30,
 		},
@@ -678,6 +680,7 @@ const cards = [
 	},
 	{
 		id : 19,
+		whichCouncil: false,
 		requirement : {
 			sports : 20,
 		},
