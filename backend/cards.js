@@ -2,10 +2,10 @@
 // time: Full
 // all others: half
 
-const singleTimeDecrement = -25, doubleTimeDecrement = -50;
+const singleTimeDecrement = -20, doubleTimeDecrement = -30;
 const singleSkillDecrement = -10, doubleSkillDecrement = -20;
 const singleSkillIncrement = 10, doubleSkillIncrement = 20;
-const singleTimeIncrement = 25, doubleTimeIncrement = 50;
+const singleTimeIncrement = 20, doubleTimeIncrement = 30;
 
 function netaSelector(parameters){
 	let res = [];
@@ -44,6 +44,11 @@ function juniorTechSelector(parameters){
 			time: doubleTimeDecrement,
 			social: singleSkillIncrement,
 			whichCouncil: 'technical',
+			resume: {
+				id: 13,
+				offset: 6,
+				placement: 0
+			}
 		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Apply for the post';
@@ -71,7 +76,12 @@ function juniorSocialSelector(parameters){
 			time: doubleTimeDecrement,
 			cultural: doubleSkillIncrement,
 			management: doubleSkillIncrement,
-			whichCouncil: 'social'
+			whichCouncil: 'social',
+			resume: {
+				id: 12,
+				offset: 1,
+				placement: 1
+			}
 		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Apply for the post';
@@ -98,7 +108,12 @@ function juniorTeamSelector(parameters){
 			sports : doubleSkillIncrement,
 			social: singleSkillIncrement,
 			time: doubleTimeDecrement,
-			whichCouncil: 'sport'
+			whichCouncil: 'sport',
+			resume: {
+				id: 19,
+				offset: 2,
+				placement: 1
+			}
 		};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Go for the selection';
@@ -125,7 +140,12 @@ function icpcSelector(parameters){
 	if(decider >= 0.5 && technical >= 20){
 		socialResponse.effect = {
 			technical : doubleSkillIncrement,
-			time: doubleTimeDecrement
+			time: doubleTimeDecrement,
+			resume: {
+				id: 21,
+				placement: 0,
+				offset: 4
+			}
 		};
 		socialResponse.message = 'Congrats Your Team Qualified';
 		socialResponse.text = 'Apply for ICPC';
@@ -229,6 +249,8 @@ function finalYearProjectSelector(parameters) {
 			pointer: doubleSkillIncrement
 		}
 	});
+
+	return res;
 }
 
 const cards = [
@@ -365,7 +387,9 @@ const cards = [
 		options : [
 			{
 				text : 'You\'re in!!',
-				effect : {}
+				effect : {
+					time: doubleTimeDecrement
+				}
 			},
 			{
 				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
@@ -378,7 +402,7 @@ const cards = [
 	},
 	{
 		id: 8,
-		requirement: {},
+		requirement: {time: 40},
 		question: `Hey Guys, Its Siraj! Your favourite tech Youtuber is starting a new certified course machine learning. It's a 5 week course requiring daily commitment for an hour`,
 		title: 'MOOCs',
 		type: 0,
@@ -430,7 +454,7 @@ const cards = [
 	{
 		id: 10,
 		requirement: {},
-		question: 'Best out of Waste! This is a <beach cleanup drive on Verspva beach>',
+		question: 'Best out of Waste! This is a <beach cleanup drive on Versova beach>',
 		title: 'Volunteer for Social Work! Paap dhulao soul bachao',
 		type: 0,
 		options: [
@@ -438,7 +462,12 @@ const cards = [
 				text: 'Accept and lead your team',
 				effect: {
 					time: singleSkillIncrement,
-					social: singleTimeDecrement
+					social: singleTimeDecrement,
+					resume: {
+						id: 10,
+						placement: 1,
+						offset: 0
+					}
 				}
 			},
 			{
@@ -448,7 +477,7 @@ const cards = [
 				}
 			},
 			{
-				text: 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text: 'Opting out',
 				effect: {}
 			}
 		]
@@ -460,8 +489,7 @@ const cards = [
 	{
 		id : 12,
 		requirement: {
-			social: 55,
-			time: 75
+			social: 55
 		},
 		question: 'Interviews for Juniors Positions at <cultural council> have begun, you might have a good shot at it',
 		title: 'Time to be an insider',
@@ -472,7 +500,6 @@ const cards = [
 		id : 13,
 		requirement : {
 			technical : 30,
-			time : 75
 		},
 		title : 'Time to be an Insider',
 		question : 'Interviews for Junior Positions at <Emfinity math club> have begun, you might have a good shot at it',
@@ -681,7 +708,10 @@ const cards = [
 		title : 'Opportunity knocks at your door',
 		type : 0,
 		question : 'There is an opportunity to drive the entire marketing campaign for you college fest. You\'ll be the go-to person for all the decisions',
-		requirement : {},
+		requirement : {
+			social: 30,
+			management: 40
+		},
 		options : [
 			{
 				text : 'Accept responsibilty and work hard on it',
@@ -726,28 +756,48 @@ const cards = [
 					social : singleSkillIncrement,
 					time : singleTimeDecrement,
 					technical : singleSkillIncrement,
-					pointer : singleSkillDecrement
+					pointer : singleSkillDecrement,
+					resume: {
+						id: 22,
+						placement: 0,
+						offset: 2
+					}
 				}
 			},
 			{
 				text : 'Take it in your own hands and get it done yourself',
 				effect : {
 					time: doubleTimeDecrement,
-					technical: doubleSkillIncrement
+					technical: doubleSkillIncrement,
+					resume: {
+						id: 22,
+						placement: 0,
+						offset: 2
+					}
 				}
 			},
 			{
 				text : 'Do justice to your part and leave the remaining part as it is',
 				effect : {
 					pointer : doubleSkillDecrement,
-					technical: singleSkillIncrement
+					technical: singleSkillIncrement,
+					resume: {
+						id: 22,
+						placement: 0,
+						offset: 2
+					}
 				}
 			},
 			{
 				text : 'Use some ready made project and use the remaining time to study for approaching test',
 				effect : {
 					technical: doubleSkillDecrement,
-					time: singleTimeDecrement
+					time: singleTimeDecrement,
+					resume: {
+						id: 22,
+						placement: 0,
+						offset: 2
+					}
 				}
 			}
 		]
@@ -810,7 +860,7 @@ const cards = [
 				effect : {}
 			},
 			{
-				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text : 'Opting out',
 				effect : {
 					time : doubleTimeDecrement,
 					social : doubleSkillIncrement 
@@ -829,7 +879,12 @@ const cards = [
 				text : 'Apply for internship',
 				effect : {
 					time : doubleTimeDecrement,
-					technical : doubleSkillIncrement 
+					technical : doubleSkillIncrement,
+					resume: {
+						id: 26,
+						placement: 0,
+						offset: 0
+					}
 				}
 			},
 			{
@@ -890,7 +945,7 @@ const cards = [
 				}
 			},
 			{
-				text: 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text: 'Opt out',
 				effect: {}
 			}
 		]
@@ -911,7 +966,7 @@ const cards = [
 				text: 'Apply for the post',
 				effect: {
 					time: doubleTimeDecrement, 
-					social: doubleSkillIncrement, 
+					social: doubleSkillIncrement
 				}
 			},
 			{
@@ -924,7 +979,7 @@ const cards = [
 		id: 31,
 		whichCouncil: 'technical',
 		requirement: {technical: 50},
-		question: 'Apply for Head Positions at Cultural council you have been a part of, you might have a good shot at it ',
+		question: 'Apply for Head Positions at Technical council you have been a part of, you might have a good shot at it ',
 		title: 'With great power comes great responsibility',
 		type: 0,
 		options: [
@@ -932,7 +987,7 @@ const cards = [
 				text: 'Apply for the post',
 				effect: {
 					time: doubleTimeDecrement, 
-					social: doubleSkillIncrement, 
+					technical: doubleSkillIncrement, 
 				}
 			},
 			{
@@ -974,7 +1029,7 @@ const cards = [
 	},
 	{
 		id: 33,
-		requirement: {technical: 40},
+		requirement: {technical: 40, social: 10},
 		question: 'Smart India Hackthon has been announced, it is one of the biggest Hackathon that one could be a part of it',
 		title: 'Mere yuva bhaiya or beheno',
 		type: 0,
@@ -983,7 +1038,12 @@ const cards = [
 				text: 'Apply for the hackathon',
 				effect: {
 					time: singleTimeDecrement, 
-					technical: singleSkillIncrement, 
+					technical: singleSkillIncrement,
+					resume: {
+						id: 33,
+						placement: 0,
+						offset: 5
+					} 
 				}
 			},
 			{
@@ -1045,7 +1105,7 @@ const cards = [
 	},
 	{
 		id : 37,
-		requirement: {},
+		requirement: {technical: 70},
 		question: 'You have enough skills and want to try for some industrial experience so you are trying to land an internship',
 		title: 'Internships',
 		type: 0,
@@ -1054,7 +1114,12 @@ const cards = [
 				text: 'Apply for internship in your skills',
 				effect: {
 					technical: singleSkillIncrement,
-					time: singleTimeDecrement
+					time: singleTimeDecrement,
+					resume: {
+						id: 37,
+						placement: 0,
+						offset: 1
+					}
 				}
 			},
 			{
@@ -1095,7 +1160,8 @@ const cards = [
 	},
     {
         id:39,
-        title:'Placement',
+		title:'Placement',
+		question: 'With companies like Morgan Stanley coming up, would you devote time to prepare for entrance',
         type : 0,
 		options : [
 			{
