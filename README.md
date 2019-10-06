@@ -9,11 +9,8 @@
 
 <div align="center">
 
-  [![Gitter](https://img.shields.io/gitter/room/bri3fly/bri3fly.svg)](https://gitter.im/bri3fly/Lobby)
-  [![Website cv.lbesson.qc.to](https://img.shields.io/website-up-down-green-red/http/cv.lbesson.qc.to.svg)](https://github.com/inishchith/Briefly-web/tree/master)
+  [![Website cv.lbesson.qc.to](https://img.shields.io/website-up-down-green-red/http/cv.lbesson.qc.to.svg)](http://gameofengineering-4102c.firebaseapp.com)
   [![made-with-js](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-  <br>
-  [![HitCount](http://hits.dwyl.io/inishchith/Briefly.svg)](http://hits.dwyl.io/inishchith/Briefly)
 
 </div>
 
@@ -31,17 +28,14 @@
 
 <div align="center">
 
-<h3 > Briefly As Web-App  </h3>
+<h3 > Game of Engineering as PWA  </h3>
 <br>
 <p align="center">
-<img src ="./assets/briefly-web.gif" width = 500px>
+<img src ="./UI/assets/pwa.jpg" width = 500px>
 </p>
 
-<h3><a href="https://www.facebook.com/Briefly-350014818823728/">  Briefly On Messenger   </a></h3>
-<br>
-<img src="./assets/sync-sub.gif" width=245px>
-<img src="./assets/show-news.gif" width=245px>
-
+<h3><a href="http://gameofengineering-4102c.firebaseapp.com">  Check out our PWA   </a></h3>
+  <img src = "./UI/assets/pwa-question.png" width = 500px>
 </div>
 
 ------------------------------------------
