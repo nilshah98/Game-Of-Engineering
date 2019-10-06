@@ -1,0 +1,40 @@
+.message{
+    &__wrapper{
+        background: rgba(0,0,0,0.5);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+
+        &--active{
+            z-index: 999;
+        }
+    }
+    &__body{
+        position: relative;
+        top: 50%;
+        left: 50%;
+        font-size: 2rem;
+        transform: translate(-300%,-50%);
+        transition: all .5s linear;
+        text-align: center;
+        width: 70vw;
+        color: var(--color-white-semi);
+        padding: 3rem 1rem;
+        border-radius: 1rem;
+        &--danger{
+            background: red;
+            transform: translate(-50%,-50%);
+        }
+        &--warning{
+            background: orange;
+            transform: translate(-50%,-50%);
+        }
+        &--success{
+            background: green;
+            transform: translate(-50%,-50%);
+        }
+    }
+}

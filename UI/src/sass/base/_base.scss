@@ -6,11 +6,13 @@
     box-sizing: inherit;
 }
 :root {
-    --color-primary: #f56a6a;
-    --color-secondary: #118cff;
+    --color-primary: #ffa700;
+    --color-secondary: #386FF6;
     --color-white: #fff;
-    --color-white-dark: #777;
+    --color-white-dark: #EEF0F1;
     --color-black: #222;
+    --color-white-semi: #ddd;
+    --color-gray: #D2D8DB;
     background-color: var(--color-white);
     color: var(--color-black);
   }
@@ -24,7 +26,8 @@ body {
     overflow-x: hidden;
     width: 100vw;
     height: 100vh;
-    background: var(--color-white);
+    background: var(--color-white-dark);
+    overflow: hidden;
 }
 
 a {

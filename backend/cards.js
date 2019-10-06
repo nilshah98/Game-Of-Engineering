@@ -1267,6 +1267,7 @@ const cards = [
 window.cards = cards;
 
 function updateStore(newParams,newQid,newCn){
+	console.log(newQid, newCn);
 	localStorage.setItem("params",JSON.stringify(newParams));
 	localStorage.setItem("qid",String(newQid));
 	localStorage.setItem("cn",String(newCn))

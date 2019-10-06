@@ -43,6 +43,11 @@ const generateTooltip = (data, location) => `<div class="toolTip__container"><di
 ${data}
 </div></div>`
 
+const messageWrapper = document.getElementsByClassName("message__wrapper")[0];
+const messageBody = document.getElementsByClassName("message__body")[0];
+
+messageWrapper.addEventListener("click", () => messageWrapper.classList.toggle("message__wrapper--active"))
+
 const getNextCard = (optionId) => {
     // Get result for the current question number and option
     // qid and optionId
@@ -51,10 +56,37 @@ const getNextCard = (optionId) => {
     console.log(cards[qid])
     const result = nextCard.options[optionId].effect
     isCouncil = settleEffect(result, params, isCouncil)
+    messageBody.classList.remove("message__body--danger");
+    messageBody.classList.remove("message__body--warning");
+    messageBody.classList.remove("message__body--success");
+
+    for(var k in params){
+        if(params[k] < 0){
+            console.log("GAMEOVER",k)
+            messageBody.textContent = `GAME OVER! Your ${k} has gone below 0`;
+            messageWrapper.classList.toggle("message__wrapper--active");
+            messageBody.classList.add("message__body--danger");
+            // window.localStorage.clear();
+            // params = {social : 50,technical : 50,goal : undefined,management : 50,cultural : 50,sports : 50,time : 100,pointer : 0};
+            // updateStore(params,0,0)
+            localStorage.clear()
+            var newRes = getStore();
+            cn = newRes.cn
+            qid = newRes.qid
+            params = newRes.params
+            setTimeout(() => location.reload(),1500)
+            break;
+        }
+        else if(params[k] < 20){
+            messageBody.textContent = `WARNING! Your ${k} has gone below 20`;
+            messageWrapper.classList.toggle("message__wrapper--active");
+            messageBody.classList.add("message__body--warning");
+        }
+    }
 
     // Resume animations
     // tech | time | social | pointer
-    let percent = 100-params["technical"]
+    let percent = 100-(params["technical"]+params["management"]+params["sports"]+params["cultural"])/4
     paramsRes[0].style.transform = `translateY(${percent}%)`
     percent = 100 - params["time"]
     paramsRes[1].style.transform = `translateY(${percent}%)`
@@ -79,10 +111,10 @@ const getNextCard = (optionId) => {
 
     // Get the id for next card, since numbered ad 1,2,3,4....
     // console.log(nextCard);
-    updateStore(params,qid,n_qid,cn);
+    // updateStore(params,qid,n_qid,cn);
 
     // Return the card generated for the next question
-    return generateCard(nextCard)
+    return (nextCard)
 }
 
 // Selectors
@@ -91,12 +123,14 @@ const graphPaths = document.getElementsByClassName("graph__path");
 const graphNodesWrapper = document.getElementsByClassName("graph__nodeWrapper");
 const graphNodes = document.getElementsByClassName("graph__node");
 const cardContainers = document.getElementsByClassName("card__container")[0];
-const cardBodies = document.getElementsByClassName("card__body");
+var cardBodies = document.getElementsByClassName("card__body");
 const graphRow = document.getElementsByClassName("graph__row");
 const graphCol = document.getElementsByClassName("graph__col");
 const graphPageWrapper = document.getElementsByClassName("graphPage__wrapper")[0];
 // tech | time | social | pointer
 const paramsRes = document.getElementsByClassName("params__fill");
+const paramDots = document.getElementsByClassName("params__dot")
+
 
 // Graph Build
 var currPath = ``
@@ -198,10 +232,50 @@ for(let i=0; i<answers.length; i++){
     answers[i].addEventListener("click", () => {
         const id = [answers[i].classList[1].slice(14), qid]
 
-        console.log(id, "OPTION CLICKED");
+        // console.log(id, "OPTION CLICKED");
         let snextCard = getNextCard(id[0],id[1])
-        cardContainers.innerHTML += snextCard
+        cardContainers.innerHTML += generateCard(snextCard)
+
+        for(let j=answers.length - snextCard.options.length; j<answers.length; j++){
+            answers[j].addEventListener("mouseover", () => {
+                for(let i=0; i<paramDots.length; i++){
+                    // paramDots[i].classList.remove("params__dot--positive")
+                    // paramDots[i].classList.remove("params__dot--negative")   
+                }
+                console.log("HOVER", snextCard.options)
+                for(var k in snextCard.options[j - answers.length + snextCard.options.length].effect){
+                    console.log(k,j - answers.length + snextCard.options.length)
+                    if(k === "time"){
+                        paramDots[1].classList.toggle("params__dot--active")
+                    }else if(k === "social"){
+                        paramDots[2].classList.toggle("params__dot--active")
+                    }else if(k === "pointer"){
+                        paramDots[3].classList.toggle("params__dot--active")
+                    }else{
+                        paramDots[0].classList.toggle("params__dot--active")
+                    }
+                }
+            })
+            answers[j].addEventListener("mouseout", () => {
+                for(let i=0; i<paramDots.length; i++){
+                    // paramDots[i].classList.remove("params__dot--positive")
+                    // paramDots[i].classList.remove("params__dot--negative")   
+                }
+                for(var k in snextCard.options[j - answers.length + snextCard.options.length].effect){
+                    if(k === "time"){
+                        paramDots[1].classList.toggle("params__dot--active")
+                    }else if(k === "social"){
+                        paramDots[2].classList.toggle("params__dot--active")
+                    }else if(k === "pointer"){
+                        paramDots[3].classList.toggle("params__dot--active")
+                    }else{
+                        paramDots[0].classList.toggle("params__dot--active")
+                    }
+                }
+            })
+        }
         answersEventListener();
+
         
         cn = Math.min(cn + 1, graphPathsWrapper.length)
         
