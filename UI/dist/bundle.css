@@ -30,6 +30,9 @@ body {
   height: 100vh;
   background: var(--color-white-dark);
   overflow: hidden;
+  font-weight: 500;
+  letter-spacing: normal;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 a {
