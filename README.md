@@ -1,5 +1,5 @@
 <div align="center">
-  <h1> Game Of Engineering a.k.a. [Guide-Me] </h1>
+  <h1> Game Of Engineering</h1>
   <p> An attempt at making a guide for college life </p>
   <img width=300px height=300px src="./UI/assets/logo.png" alt="Guide-Me"></a>
 </div>
