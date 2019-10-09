@@ -64,7 +64,7 @@ const getNextCard = (optionId) => {
     messageBody.classList.remove("message__body--success");
 
     for(var k in params){
-        if(params[k] < 0){
+        if(params[k] <= 0){
             console.log("GAMEOVER",k)
             messageBody.textContent = `GAME OVER! Your ${k} has gone below 0`;
             messageWrapper.classList.toggle("message__wrapper--active");
@@ -106,7 +106,7 @@ const getNextCard = (optionId) => {
     while(!nextCard.hasOwnProperty("title")){
         if(nextCard.isVacation){
             params["time"] = 100;
-            messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`;
+            messageBody.textContent = `Vacation started! Here're your skills till now - <br> ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`;
             messageWrapper.classList.toggle("message__wrapper--active");
             messageBody.classList.add("message__body--info");
         }
@@ -178,15 +178,13 @@ for(let i=0; i<cn; i++){
 // Question => qid
 var currCard = ``
 nextCard = next_card(qid,params,false)
-console.log("***********************************",nextCard);
-console.log(qid);
 n_qid = nextCard.id;
 // keep fetching till nextCard has title
 while(!nextCard.hasOwnProperty("title")){
     console.log("loop")
     if(nextCard.isVacation){
         params["time"] = 100;
-        messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem)}`;
+        messageBody.textContent = `Vacation started! Your free time is restored`;
         messageWrapper.classList.toggle("message__wrapper--active");
         messageBody.classList.add("message__body--danger");
     }
