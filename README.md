@@ -1,7 +1,7 @@
 <div align="center">
-  <h1> Game Of Engineering a.k.a. [Guide-Me] </h1>
+  <h1> Game Of Engineering</h1>
+  <img width=100px height=100px src="./UI/assets/logo.png" alt="Guide-Me"></a>
   <p> An attempt at making a guide for college life </p>
-  <img width=300px height=300px src="./UI/assets/logo.png" alt="Guide-Me"></a>
 </div>
 
 
@@ -16,7 +16,10 @@
 
 ------------------------------------------
 
-> Ever reassessed your decisions in your college life, Find a way to evaluate those would be's and figure out the pathway they would lead to
+Ever reassessed your decisions in your college life, Find a way to evaluate those would be's and figure out the pathway they would lead to. Go on a path of self-discovery because
+<div align="center">
+  &#10077; Life is a matter of choices, and every choice you make makes you &#10078;
+</div>
 
 ------------------------------------------
 ### Features
@@ -32,15 +35,15 @@
 <br>
 <p align="center">
   <kbd>
- <img src ="./UI/assets/pwa.jpg" width = auto height = 500px>
+ <img src ="./UI/assets/pwa.jpg" width = auto height = 350px>
   </kbd>
   <kbd>
-<img src ="./UI/assets/pwa-question.jpg" width = auto height = 500px>
+<img src ="./UI/assets/pwa-question.jpg" width = auto height = 350px>
   </kbd>
 </p>
 
 <h3><a href="http://gameofengineering-4102c.firebaseapp.com">  Check out our PWA   </a></h3>
-<kbd>  <img src = "./UI/assets/longer-path.png" width = auto height = 500px >
+<kbd>  <img src = "./UI/assets/longer-path.png" width = auto height = 400px >
 </kbd>
 </div>
 
