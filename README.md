@@ -32,10 +32,10 @@
 <br>
 <p align="center">
   <kbd>
- <img src ="./UI/assets/pwa.jpg" width = auto height = 500px>
+ <img src ="./UI/assets/pwa.jpg" width = auto height = 350px>
   </kbd>
   <kbd>
-<img src ="./UI/assets/pwa-question.jpg" width = auto height = 500px>
+<img src ="./UI/assets/pwa-question.jpg" width = auto height = 350px>
   </kbd>
 </p>
 
