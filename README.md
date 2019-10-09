@@ -40,7 +40,7 @@
 </p>
 
 <h3><a href="http://gameofengineering-4102c.firebaseapp.com">  Check out our PWA   </a></h3>
-<kbd>  <img src = "./UI/assets/longer-path.png" width = auto height = 500px >
+<kbd>  <img src = "./UI/assets/longer-path.png" width = auto height = 400px >
 </kbd>
 </div>
 
