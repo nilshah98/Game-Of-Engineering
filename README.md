@@ -1,7 +1,7 @@
 <div align="center">
   <h1> Game Of Engineering</h1>
+  <img width=100px height=100px src="./UI/assets/logo.png" alt="Guide-Me"></a>
   <p> An attempt at making a guide for college life </p>
-  <img width=300px height=300px src="./UI/assets/logo.png" alt="Guide-Me"></a>
 </div>
 
 
