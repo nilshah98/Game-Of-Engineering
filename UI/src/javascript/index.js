@@ -31,6 +31,9 @@ const pathTop =`<div class="graph__pathWrapper graph__pathWrapper--top">
 
 // Helper functions
 const generateCard = (data) => `<div class="card__body">
+    <div class="card__title">
+    ${data.title}
+    </div>
     <div class="card__question">
     ${data.question}
     </div>
