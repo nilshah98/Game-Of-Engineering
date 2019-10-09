@@ -16,7 +16,10 @@
 
 ------------------------------------------
 
-> Ever reassessed your decisions in your college life, Find a way to evaluate those would be's and figure out the pathway they would lead to
+Ever reassessed your decisions in your college life, Find a way to evaluate those would be's and figure out the pathway they would lead to. Go on a path of self-discovery because
+<div align="center">
+  &#10077; Life is a matter of choices, and every choice you make makes you &#10078;
+</div>
 
 ------------------------------------------
 ### Features
