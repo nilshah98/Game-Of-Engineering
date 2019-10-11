@@ -1,9 +1,14 @@
-import {messageWrapper, graphNodesWrapper, cardContainers, graphPageWrapper, cardBodies} from './selectors'
+import {messageWrapper, messageBody, graphNodesWrapper, cardContainers, graphPageWrapper, cardBodies} from './selectors'
 
 // Event Listeners
 const initialiseEventListeners = (offSet) => {
-    messageWrapper.addEventListener("click", () => messageWrapper.classList.toggle("message__wrapper--active"))
-
+    messageWrapper.addEventListener("click", () => {
+        messageWrapper.classList.toggle("message__wrapper--active")
+        messageBody.classList.remove("message__body--danger");
+        messageBody.classList.remove("message__body--warning");
+        messageBody.classList.remove("message__body--info");
+    })
+    
     for(let i=0; i<graphNodesWrapper.length; i++){
         graphNodesWrapper[i].addEventListener("click", () => {
             var {cn} = getStore()

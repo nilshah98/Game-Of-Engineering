@@ -1,148 +1,146 @@
 import "../sass/main.scss";
 import './constants'
-import {graphPathsWrapper, graphPaths, graphNodesWrapper, graphNodes, 
-    cardContainers, paramDots, messageWrapper, messageBody} from './selectors'
-import {generateCard, handleRes, handleMessages} from './helper'
+import {graphPathsWrapper, graphPaths, graphNodesWrapper, graphNodes, cardContainers, paramDots} from './selectors'
+import {generateCard, handleRes, handleMessages, handleDots} from './helper'
 import {initialiseEventListeners} from './eventListeners'
 
 // Globals
-var {cn, qid, n_qid, params} = getStore();
+var {cn, qid, params} = getStore();
 var isCouncil = false;
-let nextCard = {}
+var nextCard
 
 initialiseEventListeners(cn)
 
-const getNextCard = (optionId) => {
-    // Get result for the current question number and option
-    // qid and optionId
-    const result = nextCard.options[optionId].effect
-    isCouncil = settleEffect(result, params, isCouncil)
-
-    handleMessages(params)
-    handleRes(params)
-    
-    // Get nextcard for the provided qid, params and isCouncil
-    qid = n_qid;
-    nextCard = next_card(qid, params, isCouncil);
-    n_qid = nextCard.id;
-    // While the nextCard does not have "title" parameter, keep fetching
-    while(!nextCard.hasOwnProperty("title")){
-        if(nextCard.isVacation){
-            params["time"] = 100;
-            messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`;
-            messageWrapper.classList.toggle("message__wrapper--active");
-            messageBody.classList.add("message__body--info");
-        }
-        qid = n_qid
-        nextCard = next_card(qid, params, isCouncil)
-        n_qid = nextCard.id
-    }
-
-    return (nextCard)
-}
-
-// Question => qid
 var currCard = ``
 nextCard = next_card(qid,params,false)
-console.log("***********************************",nextCard);
-console.log(qid);
-n_qid = nextCard.id;
+
 // keep fetching till nextCard has title
 while(!nextCard.hasOwnProperty("title")){
-    console.log("loop")
     if(nextCard.isVacation){
         params["time"] = 100;
-        messageBody.textContent = `Vacation started! Here're your skills till now - ${Object.keys(params).map((elem) => elem)}`;
-        messageWrapper.classList.toggle("message__wrapper--active");
-        messageBody.classList.add("message__body--danger");
+        handleMessages("info", `Vacation started! Here're your skills till now\n - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`)
     }
-    qid = n_qid;
+
     nextCard = next_card(qid, params, isCouncil)
-    n_qid = nextCard.id;
+    qid = nextCard.id;
 }
-// Cannot update here, since no necessary that the question has been answered;
-// qid = nextCard.id;
+
+// Cannot update here, since no necessary that the question has been answered
 currCard += generateCard(nextCard);
 cardContainers.innerHTML = currCard;
+
+const answers = document.getElementsByClassName("card__answer");
+for(let i=0; i<answers.length; i++){
+    answers[i].addEventListener("mouseover", () => handleDots(i, 0, nextCard))
+    answers[i].addEventListener("mouseout", () => handleDots(i, 0, nextCard))
+}
 
 // Result
 handleRes(params)
 
 graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next");
 
-const answersEventListener = () => {
-const answers = document.getElementsByClassName("card__answer");
-for(let i=0; i<answers.length; i++){
-    answers[i].addEventListener("click", () => {
-        const id = [answers[i].classList[1].slice(14), qid]
+const getNextCard = (optionId) => {
+    // Get result for the current question number and option
+    let event = ""
+    let eventAttr = []
+    
+    const result = nextCard.options[optionId].effect
+    qid = nextCard.id
 
-        let snextCard = getNextCard(id[0],id[1])
-        cardContainers.innerHTML += generateCard(snextCard)
-
-        for(let j=answers.length - snextCard.options.length; j<answers.length; j++){
-            answers[j].addEventListener("mouseover", () => {
-                for(let i=0; i<paramDots.length; i++){
-                    // paramDots[i].classList.remove("params__dot--positive")
-                    // paramDots[i].classList.remove("params__dot--negative")   
-                }
-                console.log("HOVER", snextCard.options)
-                for(var k in snextCard.options[j - answers.length + snextCard.options.length].effect){
-                    console.log(k,j - answers.length + snextCard.options.length)
-                    if(k === "time"){
-                        paramDots[1].classList.toggle("params__dot--active")
-                    }else if(k === "social"){
-                        paramDots[2].classList.toggle("params__dot--active")
-                    }else if(k === "pointer"){
-                        paramDots[3].classList.toggle("params__dot--active")
-                    }else{
-                        paramDots[0].classList.toggle("params__dot--active")
-                    }
-                }
-            })
-            answers[j].addEventListener("mouseout", () => {
-                for(let i=0; i<paramDots.length; i++){
-                    // paramDots[i].classList.remove("params__dot--positive")
-                    // paramDots[i].classList.remove("params__dot--negative")   
-                }
-                for(var k in snextCard.options[j - answers.length + snextCard.options.length].effect){
-                    if(k === "time"){
-                        paramDots[1].classList.toggle("params__dot--active")
-                    }else if(k === "social"){
-                        paramDots[2].classList.toggle("params__dot--active")
-                    }else if(k === "pointer"){
-                        paramDots[3].classList.toggle("params__dot--active")
-                    }else{
-                        paramDots[0].classList.toggle("params__dot--active")
-                    }
-                }
-            })
+    isCouncil = settleEffect(result, params, isCouncil)
+    
+    for(var k in params){
+        if(params[k] < 0){
+            event="danger"
+            eventAttr=[k]
+            break
         }
-        answersEventListener();
-
+        else if(params[k] < 20){
+            event = "warning"
+            eventAttr.push(k)
+        }
+    }
+    
+    handleRes(params)
+    
+    if(event === "danger"){
+        handleMessages(event,`Game Over ${eventAttr.join(' ')} has dropped below 0`);
+        nextCard = null;
+        return;
+    }
+    else{
+        // Get nextcard for the provided qid, params and isCouncil
+        nextCard = next_card(qid, params, isCouncil)
+        let flag = true
         
-        cn = Math.min(cn + 1, graphPathsWrapper.length)
+        // While the nextCard does not have "title" parameter, keep fetching
+        while(!nextCard.hasOwnProperty("title")){
+            if(nextCard.isVacation){
+                params["time"] = 100;
+                event = event === "warning" ? event : "info" 
+                handleMessages(event, `Vacation started! Here're your skills till now\n - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`)
+                flag = false
+            }
+            nextCard = next_card(qid, params, isCouncil)
+            qid = nextCard.id
+        }
         
-        if(!graphPaths[cn-1].classList.contains("graph__path--active")){
+        if(flag && event === "warning"){handleMessages(event,`Warning ${eventAttr.join()} have dropped below 20`)}
+        
+        return (nextCard)
+    }
+}
 
-            updateStore(params,qid,cn);
+const answersEventListener = () => {
+    const answers = document.getElementsByClassName("card__answer");
+    for(let i=0; i<answers.length; i++){
+        answers[i].addEventListener("click", () => {
+
+            let snextCard = getNextCard(answers[i].classList[1].slice(14))
             
-            graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
-            graphNodes[cn - 1].classList.toggle("graph__node--active")
-            graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
-            
-            
-            setTimeout(() => {
+            if(snextCard){
+                cardContainers.innerHTML += generateCard(snextCard)
+                let start = answers.length - snextCard.options.length
+                let end = answers.length 
                 
-                graphPaths[cn - 1].classList.toggle("graph__path--active")
-                
-                if(graphNodes.length > cn){
-                    graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
+                for(let j=start; j<end; j++){
+                    answers[j].addEventListener("mouseover", () => handleDots(j, start, snextCard))
+                    answers[j].addEventListener("mouseout", () => handleDots(j, start, snextCard))
                 }
                 
-            },501)
-        } 
-    })
-}
+                // For next cards
+                answersEventListener();
+                
+                cn = Math.min(cn + 1, graphPathsWrapper.length)
+                
+                if(!graphPaths[cn-1].classList.contains("graph__path--active")){
+                    
+                    updateStore(params,qid,cn);
+                    
+                    graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
+                    graphNodes[cn - 1].classList.toggle("graph__node--active")
+                    graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
+                    
+                    
+                    setTimeout(() => {
+                        
+                        graphPaths[cn - 1].classList.toggle("graph__path--active")
+                        
+                        if(graphNodes.length > cn){
+                            graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
+                        }
+                        
+                    },501)
+                }
+            }
+            else{
+                localStorage.clear();
+                setTimeout(() => location.reload(), 2000);
+            }
+            
+        })
+    }
 }
 
 answersEventListener();

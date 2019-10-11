@@ -1,4 +1,4 @@
-import {paramsRes, messageBody, messageWrapper} from './selectors'
+import {paramsRes, messageBody, messageWrapper, paramDots} from './selectors'
 
 // Helper Functions
 const generateCard = (data) => `<div class="card__body">
@@ -24,28 +24,23 @@ const handleRes = (params) => {
     paramsRes[3].style.transform = `translateY(${percent}%)`
 }
 
-const handleMessages = (params) => {
-    messageBody.classList.remove("message__body--danger");
-    messageBody.classList.remove("message__body--warning");
-    messageBody.classList.remove("message__body--success");
+const handleMessages = (event, message) => {
+    messageBody.textContent = message;
+    messageWrapper.classList.toggle("message__wrapper--active");
+    messageBody.classList.add(`message__body--${event}`)
+}
 
-    for(var k in params){
-        if(params[k] < 0){
-            messageBody.textContent = `GAME OVER! Your ${k} has gone below 0`;
-            messageWrapper.classList.toggle("message__wrapper--active");
-            messageBody.classList.add("message__body--danger");
-            setTimeout(() => {
-                window.localStorage.clear()
-                location.reload()
-            }, 1000);
-            break;
-        }
-        else if(params[k] < 20){
-            messageBody.textContent = `WARNING! Your ${k} has gone below 20`;
-            messageWrapper.classList.toggle("message__wrapper--active");
-            messageBody.classList.add("message__body--warning");
+const handleDots = (curr, start, snextCard) => {
+    for(var k in snextCard.options[curr - start].effect){
+        if(k === "time"){
+            paramDots[1].classList.toggle("params__dot--active")
+        }else if(k === "social"){
+            paramDots[2].classList.toggle("params__dot--active")
+        }else if(k === "pointer"){
+            paramDots[3].classList.toggle("params__dot--active")
+        }else{
+            paramDots[0].classList.toggle("params__dot--active")
         }
     }
 }
-
-export {generateCard, handleRes, handleMessages}
+export {generateCard, handleRes, handleMessages, handleDots}
