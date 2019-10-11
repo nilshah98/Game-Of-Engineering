@@ -1,4 +1,4 @@
-import {paramsRes, messageBody, messageWrapper, paramDots} from './selectors'
+import {paramsRes, messageBody, messageWrapper, paramDots, graphPaths, graphPathsWrapper, graphNodes, graphNodesWrapper} from './selectors'
 
 // Helper Functions
 const generateCard = (data) => `<div class="card__body">
@@ -43,4 +43,28 @@ const handleDots = (curr, start, snextCard) => {
         }
     }
 }
-export {generateCard, handleRes, handleMessages, handleDots}
+
+const graphAnimation = () => {
+    var {params, qid, cn, isCouncil} = getStore()
+    cn = Math.min(cn + 1, graphPathsWrapper.length)
+    updateStore(params, qid, cn, isCouncil)
+    if(!graphPaths[cn-1].classList.contains("graph__path--active")){
+
+        graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
+        graphNodes[cn - 1].classList.toggle("graph__node--active")
+        graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
+        
+        
+        setTimeout(() => {
+            
+            graphPaths[cn - 1].classList.toggle("graph__path--active")
+            
+            if(graphNodes.length > cn){
+                graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
+            }
+            
+        },501)
+    }
+}
+
+export {generateCard, handleRes, handleMessages, handleDots, graphAnimation}

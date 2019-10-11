@@ -1,4 +1,5 @@
-import {graphRow, graphCol, graphNodes, graphNodesWrapper, graphPaths, graphPathsWrapper} from './selectors'
+import {graphRow, graphCol, graphNodes, graphNodesWrapper, graphPaths, graphPathsWrapper, cardContainers} from './selectors'
+import {generateCard, handleMessages, handleRes, handleDots} from './helper'
 
 // Graph builder strings
 const pathLeft =`<div class="graph__pathWrapper graph__pathWrapper--left">
@@ -24,7 +25,7 @@ const pathTop =`<div class="graph__pathWrapper graph__pathWrapper--top">
 // Helper functions
 const generateGraph = () => {
     var currPath = ``
-
+    
     for(let i=0; i<5; i++){
         currPath += nodeLeft
         currPath += pathLeft
@@ -50,7 +51,7 @@ const generateGraph = () => {
     for(let i=0; i<graphCol.length; i++){
         graphCol[i].innerHTML = currPath
     }
-
+    
     var {cn} = getStore()
     for(let i=0; i<cn; i++){
         graphNodesWrapper[i].classList.add("graph__nodeWrapper--active");
@@ -62,4 +63,36 @@ const generateGraph = () => {
 
 generateGraph()
 
-export {pathLeft, pathRight, nodeLeft, nodeRight, pathTop}
+const initialise = () => {
+    var currCard = ``
+    var {params, qid, cn, isCouncil} = getStore()
+    var nextCard = next_card(qid,params,isCouncil)
+    
+    // keep fetching till nextCard has title
+    while(!nextCard.hasOwnProperty("title")){
+        if(nextCard.isVacation){
+            params["time"] = 100;
+            handleMessages("info", `Vacation started! Here're your skills till now\n - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`)
+        }
+        
+        nextCard = next_card(qid, params, isCouncil)
+        qid = nextCard.id;
+    }
+    
+    updateStore(params, qid, cn, isCouncil)
+    currCard += generateCard(nextCard);
+    cardContainers.innerHTML = currCard;
+    
+    const answers = document.getElementsByClassName("card__answer");
+    for(let i=0; i<answers.length; i++){
+        answers[i].addEventListener("mouseover", () => handleDots(i, 0, nextCard))
+        answers[i].addEventListener("mouseout", () => handleDots(i, 0, nextCard))
+    }
+    
+    handleRes(params)
+    graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next");
+    
+    return nextCard
+}
+
+export {pathLeft, pathRight, nodeLeft, nodeRight, pathTop, initialise}

@@ -1210,11 +1210,12 @@ const cards = [
 
 window.cards = cards;
 
-function updateStore(newParams,newQid,newCn){
-	console.log(newQid, newCn);
-	localStorage.setItem("params",JSON.stringify(newParams));
-	localStorage.setItem("qid",String(newQid));
+function updateStore(newParams,newQid,newCn, newIsCouncil){
+	console.log(newParams,newQid,newCn, newIsCouncil)
+	localStorage.setItem("params",JSON.stringify(newParams))
+	localStorage.setItem("qid",String(newQid))
 	localStorage.setItem("cn",String(newCn))
+	localStorage.setItem("isCouncil",String(newIsCouncil))
 }
 
 function getStore(){
@@ -1233,6 +1234,7 @@ function getStore(){
 	};
 	res.qid = parseInt(localStorage.getItem("qid")) || 0;
 	res.cn = parseInt(localStorage.getItem("cn")) || 0;
+	res.isCouncil = localStorage.getItem("isCouncil") === "true" ? true : false;
 
 	return res;
 }

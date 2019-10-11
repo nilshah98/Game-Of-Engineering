@@ -1,47 +1,17 @@
 import "../sass/main.scss";
-import './constants'
-import {graphPathsWrapper, graphPaths, graphNodesWrapper, graphNodes, cardContainers, paramDots} from './selectors'
-import {generateCard, handleRes, handleMessages, handleDots} from './helper'
+import {initialise} from './constants'
+import {cardContainers} from './selectors'
+import {generateCard, handleRes, handleMessages, handleDots, graphAnimation} from './helper'
 import {initialiseEventListeners} from './eventListeners'
 
 // Globals
-var {cn, qid, params} = getStore();
-var isCouncil = false;
-var nextCard
-
+var nextCard = initialise()
+var {cn} = getStore()
 initialiseEventListeners(cn)
-
-var currCard = ``
-nextCard = next_card(qid,params,false)
-
-// keep fetching till nextCard has title
-while(!nextCard.hasOwnProperty("title")){
-    if(nextCard.isVacation){
-        params["time"] = 100;
-        handleMessages("info", `Vacation started! Here're your skills till now\n - ${Object.keys(params).map((elem) => elem + " - " + params[elem])}`)
-    }
-
-    nextCard = next_card(qid, params, isCouncil)
-    qid = nextCard.id;
-}
-
-// Cannot update here, since no necessary that the question has been answered
-currCard += generateCard(nextCard);
-cardContainers.innerHTML = currCard;
-
-const answers = document.getElementsByClassName("card__answer");
-for(let i=0; i<answers.length; i++){
-    answers[i].addEventListener("mouseover", () => handleDots(i, 0, nextCard))
-    answers[i].addEventListener("mouseout", () => handleDots(i, 0, nextCard))
-}
-
-// Result
-handleRes(params)
-
-graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next");
 
 const getNextCard = (optionId) => {
     // Get result for the current question number and option
+    var {params, qid, cn, isCouncil} = getStore();
     let event = ""
     let eventAttr = []
     
@@ -67,6 +37,7 @@ const getNextCard = (optionId) => {
     if(event === "danger"){
         handleMessages(event,`Game Over ${eventAttr.join(' ')} has dropped below 0`);
         nextCard = null;
+        updateStore(params, qid, cn, isCouncil)
         return;
     }
     else{
@@ -88,15 +59,19 @@ const getNextCard = (optionId) => {
         
         if(flag && event === "warning"){handleMessages(event,`Warning ${eventAttr.join()} have dropped below 20`)}
         
+        updateStore(params, qid, cn, isCouncil)
         return (nextCard)
     }
 }
 
 const answersEventListener = () => {
+    
     const answers = document.getElementsByClassName("card__answer");
+
     for(let i=0; i<answers.length; i++){
         answers[i].addEventListener("click", () => {
 
+            // answers[i].classList[1].slice(14) => optionID for card__answer-- => len is 14
             let snextCard = getNextCard(answers[i].classList[1].slice(14))
             
             if(snextCard){
@@ -108,37 +83,14 @@ const answersEventListener = () => {
                     answers[j].addEventListener("mouseover", () => handleDots(j, start, snextCard))
                     answers[j].addEventListener("mouseout", () => handleDots(j, start, snextCard))
                 }
-                
-                // For next cards
-                answersEventListener();
-                
-                cn = Math.min(cn + 1, graphPathsWrapper.length)
-                
-                if(!graphPaths[cn-1].classList.contains("graph__path--active")){
-                    
-                    updateStore(params,qid,cn);
-                    
-                    graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--next")
-                    graphNodes[cn - 1].classList.toggle("graph__node--active")
-                    graphNodesWrapper[cn - 1].classList.toggle("graph__nodeWrapper--active")
-                    
-                    
-                    setTimeout(() => {
-                        
-                        graphPaths[cn - 1].classList.toggle("graph__path--active")
-                        
-                        if(graphNodes.length > cn){
-                            graphNodesWrapper[cn].classList.toggle("graph__nodeWrapper--next")
-                        }
-                        
-                    },501)
-                }
+
+                answersEventListener()
+                graphAnimation()
             }
             else{
                 localStorage.clear();
                 setTimeout(() => location.reload(), 2000);
-            }
-            
+            }     
         })
     }
 }
