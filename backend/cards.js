@@ -12,7 +12,7 @@ function netaSelector(parameters){
 	let decider = Math.random();
 	let {social} = parameters;
 	let socialResponse = {}
-	if(decider >= 0.5 && social >= 20){
+	if(decider >= 0.5 && social >= 30){
 		socialResponse.effect = {social : doubleSkillIncrement};
 		socialResponse.message = 'You got selected';
 		socialResponse.text = 'Stand for CR';
@@ -28,7 +28,7 @@ function netaSelector(parameters){
 	});
 	res.push({
 		text : 'Do not participate',
-		effect : {},
+		effect : {social : singleSkillDecrement},
 	});
 	return res
 };
@@ -61,7 +61,6 @@ function juniorTechSelector(parameters){
 };
 
 function juniorSocialSelector(parameters){
-	console.log("qawsedrf");
 	let res = [];
 	let decider = Math.random();
 	let {social} = parameters;
@@ -152,7 +151,6 @@ function resultSelector(parameters) {
 		pointerResponse.effect = {
 			social: singleSkillDecrement,
 			pointer: doubleSkillIncrement,
-			time: doubleTimeDecrement
 		};
 		pointerResponse.message = 'Congrats! Your efforts have payed off!! You have scored excellently';
 		pointerResponse.text = 'Cover all the topics briefly';
@@ -161,7 +159,6 @@ function resultSelector(parameters) {
 		pointerResponse.effect = {
 			social: singleSkillDecrement,
 			pointer: singleSkillIncrement,
-			time: doubleTimeDecrement
 		}
 		pointerResponse.message = 'Congrats! Your efforts have payed off!!';
 		pointerResponse.text = 'Cover all topics briefly';
@@ -171,7 +168,6 @@ function resultSelector(parameters) {
 	decider = Math.random();
 	if( decider >= 0.7 && pointer >= 50 ) {
 		pointerResponse.effect = {
-			time: doubleTimeDecrement,
 			pointer: singleSkillIncrement,
 		}
 		pointerResponse.message = 'Congrats! Your efforts have payed off!!',
@@ -185,8 +181,9 @@ function resultSelector(parameters) {
 	res.push(pointerResponse);
 	res.push({
 		effect: {
-			pointer: doubleSkillDecrement
+			pointer: singleSkillDecrement
 		},
+		message: 'God only helps those who help themselves',
 		text: 'Sleep and let god decide your fate'
 	});
 	return res;
@@ -251,27 +248,29 @@ const cards = [
 		type: 0,
 		options: [
 			{
-				text: 'Attend workshop on <programming in python>',
+				text: 'Attend workshop on programming in python',
 				effect: {
-					technical: singleSkillIncrement
+					technical: doubleSkillIncrement
 				}
 			},
 			{
-				text: 'Go for <basketball> team selection',
+				text: 'Go for basketball team selection',
 				effect: {
-					sports: singleSkillIncrement
+					sports: doubleSkillIncrement
 				}
 			},
 			{
 				text: 'Take part in debate society',
 				effect: {
-            		cultural: singleSkillIncrement,
+            		cultural: doubleSkillIncrement,
           			social: singleSkillIncrement
         		}
       		},
       		{
         		text: 'Go home else trains will get crowded',
-				effect: {}
+				effect: {
+					social: singleSkillDecrement,
+				}
       		}
 		]
 	},
@@ -286,7 +285,7 @@ const cards = [
 					text : 'Prepare a schedule and study for test',
 					effect : {
 						pointer : doubleSkillIncrement,
-						time : doubleTimeDecrement,
+						time : singleTimeDecrement,
 					}
 				},
 				{
@@ -308,7 +307,7 @@ const cards = [
 					effect : {
 						pointer : singleSkillDecrement,
 						social : singleSkillIncrement,
-						time : doubleTimeDecrement
+						time : singleTimeDecrement
 					}
 				}
 			]
@@ -329,7 +328,7 @@ const cards = [
 		type : 0,
 		options : [
 			{
-				text : "participate in technical contest",
+				text : "Participate in Technical contest",
 				effect : {
 					technical : singleSkillIncrement,
 					time : singleTimeDecrement
@@ -343,7 +342,7 @@ const cards = [
 				}
 			},
 			{
-				text : 'Take part in basketball competition',
+				text : 'Take part in Sports competition',
 				effect : {
 					sports : singleSkillIncrement,
 					time : singleTimeDecrement
@@ -351,7 +350,7 @@ const cards = [
 			},
 			{
 				text : 'Relax at home and opt out of fest',
-				effect : {}
+				effect : { social: singleSkillDecrement}
 			}
 		]
 	},
@@ -373,10 +372,9 @@ const cards = [
 				}
 			},
 			{
-				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text : 'I am not a beach kind of person',
 				effect : {
-					time : doubleTimeIncrement,
-					social : doubleSkillIncrement 
+					social : doubleSkillDecrement 
 				}
 			},
 		]
@@ -424,26 +422,26 @@ const cards = [
 		options : [
 			{
 				text : "Sherlock, FRIENDS, The Big Bang Theory, Marvel Movie Marathon",
-				effect : {}
+				effect : {time: doubleTimeDecrement}
 			},
 			{
-				text : "Zindagi humari jhand ba fir bhi ghamand ba",
-				effect : {}
+				text : "Is the huge angry green guy Thor ?",
+				effect : {Social: doubleSkillDecrement}
 			}
 		]
 	},
 	{
 		id: 10,
 		requirement: {},
-		question: 'Best out of Waste! This is a <beach cleanup drive on Versova beach>',
+		question: 'There is a beach cleanup drive on Versova beach',
 		title: 'Volunteer for Social Work! Paap dhulao soul bachao',
 		type: 0,
 		options: [
 			{
 				text: 'Accept and lead your team',
 				effect: {
-					time: singleSkillIncrement,
-					social: singleTimeDecrement
+					Social: singleSkillIncrement,
+					time: singleTimeDecrement
 				}
 			},
 			{
@@ -469,7 +467,7 @@ const cards = [
 			social: 55,
 			time: 75
 		},
-		question: 'Interviews for Juniors Positions at <cultural council> have begun, you might have a good shot at it',
+		question: 'Interviews for Juniors Positions at Cultural council have begun, you might have a good shot at it',
 		title: 'Time to be an insider',
 		type: 1,
 		options: juniorSocialSelector
@@ -1230,7 +1228,7 @@ function getStore(){
 		cultural : 50,
 		sports : 50,
 		time : 100,
-		pointer : 0
+		pointer : 50
 	};
 	res.qid = parseInt(localStorage.getItem("qid")) || 0;
 	res.cn = parseInt(localStorage.getItem("cn")) || 0;
