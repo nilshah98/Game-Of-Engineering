@@ -284,7 +284,7 @@ const cards = [
 				{
 					text : 'Prepare a schedule and study for test',
 					effect : {
-						pointer : doubleSkillIncrement,
+						pointer : doubleSkillIncrement*2,
 						time : singleTimeDecrement,
 					}
 				},
@@ -374,7 +374,7 @@ const cards = [
 			{
 				text : 'I am not a beach kind of person',
 				effect : {
-					social : doubleSkillDecrement 
+					social : singleSkillDecrement 
 				}
 			},
 		]
@@ -422,7 +422,9 @@ const cards = [
 		options : [
 			{
 				text : "Sherlock, FRIENDS, The Big Bang Theory, Marvel Movie Marathon",
-				effect : {time: doubleTimeDecrement}
+				effect : {
+					time: singleTimeDecrement
+				}
 			},
 			{
 				text : "Is the huge angry green guy Thor ?",
@@ -451,7 +453,7 @@ const cards = [
 				}
 			},
 			{
-				text: 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text: 'I\'ll try something else',
 				effect: {}
 			}
 		]
@@ -482,7 +484,6 @@ const cards = [
 		title : 'Time to be an Insider',
 		question : 'Interviews for Junior Positions at <Emfinity math club> have begun, you might have a good shot at it',
 		type : 1,
-		// TODO : ADD RANDOMIZER
 		options : juniorTechSelector
 	},
 	{
@@ -551,7 +552,7 @@ const cards = [
 			{
 				text: 'Forsake work for studies',
 				effect: {
-					pointer: doubleSkillIncrement,
+					pointer: doubleSkillIncrement*2,
 					time: singleTimeDecrement,
 					management: singleSkillDecrement
 				}
@@ -560,14 +561,15 @@ const cards = [
 				text: 'Complete work and also try to study',
 				effect: {
 					time: doubleTimeDecrement,
-					management: singleSkillIncrement
+					management: singleSkillIncrement,
+					pointer : doubleSkillIncrement
 				}
 			},
 			{
 				text: 'Complete work and go to sleep',
 				effect: {
 					time: singleTimeDecrement,
-					pointer: doubleSkillDecrement,
+					pointer: singleSkillDecrement,
 					management: singleSkillIncrement
 				}
 			},
@@ -602,16 +604,17 @@ const cards = [
 			{
 				text : 'Complete work and also try to study',
 				effect : {
-					time : doubleTimeDecrement,
-					management : singleSkillIncrement
+					time: doubleTimeDecrement,
+					management: singleSkillIncrement,
+					pointer : doubleSkillIncrement
 				}
 			},
 			{
 				text : 'Complete work and go to sleep',
 				effect : {
-					time : singleTimeDecrement,
-					pointer : doubleSkillDecrement,
-					management : singleSkillIncrement
+					time: singleTimeDecrement,
+					pointer: singleSkillDecrement,
+					management: singleSkillIncrement
 				}
 			},
 			{
@@ -619,6 +622,7 @@ const cards = [
 				effect : {
 					time : singleTimeDecrement,
 					pointer : singleSkillIncrement,
+					management: singleSkillIncrement
 				}
 			}
 		]
@@ -640,7 +644,8 @@ const cards = [
 			{
 				text: 'Use it as a reference and make your own',
 				effect: {
-					time: singleTimeDecrement
+					time: singleTimeDecrement,
+					pointer : singleSkillIncrement
 				}
 			},
 			{
@@ -648,7 +653,7 @@ const cards = [
 				effect: {
 					time: doubleTimeDecrement,
 					technical: doubleSkillIncrement,
-					pointer: singleSkillIncrement
+					pointer: doubleSkillIncrement
 				}
 			}
 		]
@@ -662,24 +667,6 @@ const cards = [
 		question : 'Selections for <football> team have begun, you might have a good shot at it ',
 		type : 1,
 		title : 'Time to be an insider',
-		// options : [
-		// 	{
-		// 		text : 'Accept',
-		// 		effect : {
-		// 			pointer : -20,
-		// 			time : -25,
-		// 			management : 20
-		// 		}
-		// 	},
-		// 	{
-		// 		text : 'Reject',
-		// 		effect : {
-		// 			time : -50,
-		// 			management : 10
-		// 		}
-		// 	},
-		// ]
-		// TODO : ADD RANDOMIZER
 		options : juniorTeamSelector
 	},
 	{
@@ -692,13 +679,6 @@ const cards = [
 			management: 40
 		},
 		options : [
-			{
-				text : 'Accept responsibilty and work hard on it',
-				effect : {
-					time : doubleTimeDecrement,
-					management : doubleSkillIncrement
-				}
-			},
 			{
 				text : 'Accept responsibilty and work hard on it',
 				effect : {
@@ -735,14 +715,14 @@ const cards = [
 					social : singleSkillIncrement,
 					time : singleTimeDecrement,
 					technical : singleSkillIncrement,
-					pointer : singleSkillDecrement
 				}
 			},
 			{
 				text : 'Take it in your own hands and get it done yourself',
 				effect : {
 					time: doubleTimeDecrement,
-					technical: doubleSkillIncrement
+					technical: doubleSkillIncrement,
+					pointer : doubleSkillIncrement
 				}
 			},
 			{
@@ -756,7 +736,8 @@ const cards = [
 				text : 'Use some ready made project and use the remaining time to study for approaching test',
 				effect : {
 					technical: doubleSkillDecrement,
-					time: singleTimeDecrement
+					time: singleTimeDecrement,
+					pointer : singleSkillDecrement
 				}
 			}
 		]
@@ -773,24 +754,25 @@ const cards = [
 			{
 				text : 'Forsake work for studies',
 				effect : {
-					pointer : doubleSkillDecrement,
+					pointer : doubleSkillIncrement,
 					time : singleTimeDecrement,
-					sports : doubleSkillIncrement
+					sports : singleSkillDecrement
 				}
 			},
 			{
 				text : 'Complete work and also try to study',
 				effect : {
-					time : doubleTimeDecrement,
-					sports : singleSkillIncrement
+					time: doubleTimeDecrement,
+					sports: singleSkillIncrement,
+					pointer : doubleSkillIncrement
 				}
 			},
 			{
 				text : 'Complete work and go to sleep',
 				effect : {
-					time : singleTimeDecrement,
-					pointer : doubleSkillDecrement,
-					sports : singleSkillIncrement
+					time: singleTimeDecrement,
+					pointer: singleSkillDecrement,
+					sports: singleSkillIncrement
 				}
 			},
 			{
@@ -819,7 +801,7 @@ const cards = [
 				effect : {}
 			},
 			{
-				text : 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text : 'I\'ll try something else',
 				effect : {
 					time : doubleSkillIncrement,
 					social : doubleSkillIncrement 
@@ -853,7 +835,7 @@ const cards = [
 	{
 		id: 27,
 		requirement: {},
-		question: `Hey Guys, Its Siraj! Your favourite tech Youtuber is starting a new certified course machine learning. It's a 5 week course requiring daily commitment for an hour`,
+		question: `Hey Guys, Its Gaurav Sen! Your favourite tech Youtuber is starting a new course on System Designing. It's a 5 week course requiring daily commitment for an hour`,
 		title: 'MOOCs',
 		type: 0,
 		options: [
@@ -899,7 +881,7 @@ const cards = [
 				}
 			},
 			{
-				text: 'Zindagi humari jhand ba fir bhi ghamand ba',
+				text: 'I\'ll try something else',
 				effect: {}
 			}
 		]
